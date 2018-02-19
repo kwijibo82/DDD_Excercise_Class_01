@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain
 {
-    public class Class1
+    public class Peso
     {
+        public UnidadPeso Unidad { get; private set; }
+        public double Valor { get; private set; }
     }
+
 }
