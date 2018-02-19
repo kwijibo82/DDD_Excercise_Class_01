@@ -41,9 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bulto.cs" />
+    <Compile Include="Dimensiones.cs" />
     <Compile Include="Envio.cs" />
+    <Compile Include="Peso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EnvioRepository.cs" />
+    <Compile Include="UnidadPeso.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
