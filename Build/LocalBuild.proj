@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="LocalBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <SourcesDir>$(MSBuildProjectDirectory)\..\</SourcesDir>
+    <OutputBinDir>$(SourcesDir)\Src\OutputBin\</OutputBinDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(BuildConfiguration)'==''">
+    <BuildConfiguration>Release</BuildConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(BuildPlatform)' == ''">
+    <BuildPlatform>Any CPU</BuildPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(ConditionDeployOnBuild)'==''">
+    <ConditionDeployOnBuild>false</ConditionDeployOnBuild>
+  </PropertyGroup>
+
+  <!-- Solutions to build -->
+  <PropertyGroup>
+    <ConditionBuildAll>true</ConditionBuildAll>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(ConditionBuildAll)'=='true' or '$(ConditionBuildCore)'=='true'">
+    <SolutionsToBuild Include="$(SourcesDir)\Src\DDD.sln"></SolutionsToBuild>
+  </ItemGroup>
+  <!-- Targets -->
+  <Target Name="LocalBuild" DependsOnTargets="ShowVariablesInfo;RebuildProjects;RunUnitTest;OutputDateAndTime;ShowVariablesInfo">
+  </Target>
+  <Target Name="ShowVariablesInfo">
+    <Message Text="SourcesDir=$(SourcesDir)"></Message>
+    <Message Text="ConditionDeployOnBuild=$(ConditionDeployOnBuild)"></Message>
+  </Target>
+
+  <Target Name="RestoreNugets">
+    <Exec Command="&quot;$(SourcesDir)\Build\restoreNugets.cmd&quot;" />
+  </Target>
+
+  <Target Name="ClearOutputBinFiles">
+    <ItemGroup>
+      <FilesToDelete Include="$(OutputBinDir)**\*"/>
+    </ItemGroup> 
+    <Message Text="LocalBuildParallel - Cleaning OutputBin directory..." />
+    <Delete Files="@(FilesToDelete)" ContinueOnError="true"/>
+    <Message Text="LocalBuildParallel - Cleaned OutputBin directory." />
+  </Target>
+  <!-- In order to create _PublishedWebSites folder OutputPath must be different than OutDir -->
+  <Target Name="ReBuildProjects" DependsOnTargets="ClearOutputBinFiles">
+    <Message Text="LocalBuildParallel - Building SolutionsToBuild..." />
+    <MSBuild BuildInParallel="false"
+             Projects="@(SolutionsToBuild)"
+             Properties="DeployOnBuild=$(ConditionDeployOnBuild);TransformOnBuild=false;Configuration=$(BuildConfiguration);Platform=$(BuildPlatform)"
+             Targets="Build">
+    </MSBuild>
+    <Message Text="LocalBuildParallel - Built SolutionsToBuild." />
+  </Target>
+
+  <UsingTask
+    AssemblyFile="$(SourcesDir)\Build\XUnit\xunit.runner.msbuild.net452.dll"
+    TaskName="Xunit.Runner.MSBuild.xunit" />
+    
+  <Target Name="RunUnitTest">
+    <xunit Assemblies="$(SourcesDir)\src\EnvioBoundedContext.Domain.Model.UnitTest\bin\$(BuildConfiguration)\EnvioBoundedContext.Domain.Model.UnitTest.dll" />
+    <Message Text="LocalBuildParallel - Test SolutionsToBuild." />
+  </Target>
+
+  <Target Name="OutputDateAndTime">
+    <Message Text="Build date and time:" />
+    <Exec Command="date /T" />
+    <Exec Command="time /T" />
+  </Target>
+</Project>
