@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Telerik.JustMock;
 using TestStack.BDDfy;
 using Xunit;
 using Xunit2.Should;
@@ -16,7 +17,6 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
                 .When(x => x.CreateEnvio())
                 .Then(x => x.EnvioShouldNotBeNull())
                 .BDDfy();
-
         }
 
         #region Given
