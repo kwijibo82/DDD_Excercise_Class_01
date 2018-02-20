@@ -39,7 +39,7 @@ void doSomeWork()
 {
 	int IncorrectName = 2;
 }
-		
+```	
 ##For C# - All properties must be named using CamelCase
 ###YES:
 ```csharp
@@ -69,6 +69,7 @@ public string sampleProperty
     }
 }
 ```
+
 ##We use 4 spaces for indentation not tabs.
 	• YES:
 		void SampleMethod(string paramName)
@@ -93,7 +94,7 @@ public string sampleProperty
 		{
 		    int a = 1;
 		    if (b == 2) 
-		    {
+		    **{**
 		        a = 3;
 		    }
 		}
@@ -102,7 +103,7 @@ public string sampleProperty
 		void MethodA(int b)
 		{
 		    int a = 1;
-		    if (b == 2) {
+		    if (b == 2) **{**
 		        a = 3;
 		    }
 		}
@@ -113,9 +114,9 @@ public string sampleProperty
 		{
 		    int a = 1;
 		    if (b == 2) 
-		    {
+		    **{**
 		        a = 3;
-		    }
+		    **}**
 		}
 		
 	• NO:
@@ -130,7 +131,7 @@ public string sampleProperty
 	
 	void SampleMethod(TextWriter logger, CancellationToken token)
 	{
-	    if (logger == null) throw new ArgumentNullException(nameof(logger));
+	    if (logger == null) **throw new ArgumentNullException(nameof(logger));**
 	    if (token == null) throw new ArgumentNullException(nameof(token));
 	
 	    ...
