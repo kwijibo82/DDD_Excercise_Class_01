@@ -71,25 +71,25 @@ public string sampleProperty
 ```
 
 ##We use 4 spaces for indentation not tabs.
-	• YES:
+	###YES:
 		void SampleMethod(string paramName)
 		{
 		\s\s\s\sDoSomething();
 		}
 		
-	• NO:
+	###NO:
 		void SampleMethod(string paramName)
 		{
 		\s\sDoSomething();
 		}
-	• NO:
+	###NO:
 		void SampleMethod(string paramName)
 		{
 		\tDoSomething();
 		}
 	
 ##The open and close curly brackets must be placed in an specific line for them
-	• YES:
+	###YES:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -99,7 +99,7 @@ public string sampleProperty
 		    }
 		}
 		
-	• NO:
+	###NO:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -109,7 +109,7 @@ public string sampleProperty
 		}
 		
 ##Always use open and close curly brackets. It doesn't matter if it is only line what is going to go inside the if.
-	• YES:
+	###YES:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -119,7 +119,7 @@ public string sampleProperty
 		    **}**
 		}
 		
-	• NO:
+	###NO:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -138,7 +138,7 @@ public string sampleProperty
 	}
 
 ##Protect class variables that are only assigned in the constructor with readonly attribute
-	• YES:
+	###YES:
 		class SomeClass
 		{
 		    private readonly string _item;
@@ -151,7 +151,7 @@ public string sampleProperty
 		    ...
 		}
 		
-	• NO:
+	###NO:
 		class SomeClass
 		{
 		    private string _item;
@@ -164,20 +164,20 @@ public string sampleProperty
 		    ...
 		}
 ##Prefer object initialization over setting properties after initialization
-	• YES:
+	###YES:
 		var processResult = new ProcessMessageResult
 		{
 		    Success = false,
 		    QueueHasMessages = false
 		};
 		
-	• NO:
+	###NO:
 		var processResult = new ProcessMessageResult();
 		processResult.Success = false;
 		processResult.QueueHasMessages = false;
 
 ##Use static in class declaration when all methods are expected to be static
-	• YES:
+	###YES:
 		static class SampleClass
 		{
 		
@@ -190,7 +190,7 @@ public string sampleProperty
 		    }
 		}
 	
-	• NO:
+	###NO:
 		class SampleClass
 		{
 		
@@ -205,7 +205,7 @@ public string sampleProperty
 	
 
 ##The order for comparison with null is always having null at the end of the comparison
-	• YES:
+	###YES:
 		void SampleMethod(TextWriter logger, CancellationToken token)
 		{
 		    if (logger == null)
@@ -214,7 +214,7 @@ public string sampleProperty
 		    }
 		}
 		
-	• NO:
+	###NO:
 		void SampleMethod(TextWriter logger, CancellationToken token)
 		{
 		    if (null == logger)
@@ -224,14 +224,14 @@ public string sampleProperty
 		}
 	
 ##Is better to use nameof than a "string"
-	• YES:
+	###YES:
 		void SampleMethod(string paramName)
 		{
 		    if (string.IsNullOrEmpty(paramName) throw new ArgumentNullException(nameof(paramName));
 		    ...
 		}
 		
-	• NO:
+	###NO:
 		void SampleMethod(string paramName)
 		{
 		    if (string.IsNullOrEmpty(paramName) throw new ArgumentNullException("paramName");
@@ -239,34 +239,34 @@ public string sampleProperty
 		}
 		
 ##Is better to use $ than string.format.
-	• YES:
+	###YES:
 		string sample = $"{variable1}:{variable2}";
 		
-	• NO:
+	###NO:
 		string sample = string.Format("{0}:{1}", variable1, variable2);
 
 
 ##Use of var
 "var" can only be used when the type of the variable can be determined by looking ONLY at the right part after the "=". 
 
-	• YES:
+	###YES:
 		var variable=1;
-	• YES:
+	###YES:
 		var variable="Hello";
-	• YES:
+	###YES:
 		var element = new Dictionary<string,string>();
-	• YES:
+	###YES:
 		var element = (string)someClass.SomeMethod();
 		
-	• NO:
+	###NO:
 		var element = someClass.SomeMethod();
-	• NO:
+	###NO:
 		var element = await someClass.SomeMethod();
 		
 ##Number of parameters
 The maximum desirable number of parameters for a method is 3. Over that number there should be a reason for not using a class.
-	• YES:
+	###YES:
 		void CreatePlayer(Player player)
 	
-	• NO:
+	###NO:
 		void CreatePlayer(string playerName, string playerTeam, int playerAge, int playerNumber, ...)
