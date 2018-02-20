@@ -16,10 +16,10 @@
 
 ##For C# - All methods must be named using CamelCase
 	• YES:  
-		void **D**oSomeWork()
+		void DoSomeWork()
 		
 	• NO:
-		void **d**oSomeWork()
+		void doSomeWork()
 		
 ##For C# - All internal method variables must be named using pascalCase
 	• YES:  
