@@ -15,52 +15,60 @@
 	}
 
 ##For C# - All methods must be named using CamelCase
-	• YES:  
-		void DoSomeWork()
-		
-	• NO:
-		void doSomeWork()
-		
+
+###YES:  
+
+void **D**oSomeWork()
+
+###NO:
+
+void **d**oSomeWork()
+
+
 ##For C# - All internal method variables must be named using pascalCase
-	• YES:  
-		void DoSomeWork()
-		{
-			int correctName = 2;
-		}
-		
-	• NO:
-		void doSomeWork()
-		{
-			int IncorrectName = 2;
-		}
+###YES:
+```csharp
+void DoSomeWork()
+{
+	int correctName = 2;
+}
+```	
+###NO:
+```csharp
+void doSomeWork()
+{
+	int IncorrectName = 2;
+}
 		
 ##For C# - All properties must be named using CamelCase
-	• YES:
-		public string SampleProperty
-		{
-		    get 
-		    { 
-		        return _status; 
-		    }
-		     set
-		    {
-		        _status = value;
-		    }
-		}
-	
-	• NO:
-		public string sampleProperty
-		{
-		    get 
-		    { 
-		        return _status; 
-		    }
-		     set
-		    {
-		        _status = value;
-		    }
-		}
-
+###YES:
+```csharp
+public string SampleProperty
+{
+    get 
+    { 
+	return _status; 
+    }
+     set
+    {
+	_status = value;
+    }
+}
+```
+###NO:
+```csharp
+public string sampleProperty
+{
+    get 
+    { 
+	return _status; 
+    }
+     set
+    {
+	_status = value;
+    }
+}
+```
 ##We use 4 spaces for indentation not tabs.
 	• YES:
 		void SampleMethod(string paramName)
