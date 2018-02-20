@@ -32,8 +32,8 @@ void DoSomeWork()
 {
 	int correctName = 2;
 }
-```	
-###NO:
+```
+### NO:
 ```csharp
 void doSomeWork()
 {
