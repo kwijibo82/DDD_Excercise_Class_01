@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain.Model
 {
+    // TODO: public en la clase
     class Direccion
     {
         public string NombreCalle { get; }
@@ -17,6 +18,7 @@ namespace EnvioBoundedContext.Domain.Model
         public string Localidad { get; }
         public string Provincia { get; }
 
+        // TODO: Nomenclatura y validaciones
         public Direccion(string NombreCalle, string NumeroPortal, string Piso, string Puerta, string Escalera, string CodigoPostal, string Localidad, string Provincia)
         {
             this.NombreCalle = NombreCalle;
