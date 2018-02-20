@@ -1,5 +1,5 @@
 
-##The order of elements inside classes must be:
+## The order of elements inside classes must be:
 	
 	class NameOfMyClass
 	{
@@ -14,19 +14,19 @@
 	    // 5. Private methods
 	}
 
-##For C# - All methods must be named using CamelCase
+## For C# - All methods must be named using CamelCase
 
-###YES:  
+### YES:  
 
 void **D**oSomeWork()
 
-###NO:
+### NO:
 
 void **d**oSomeWork()
 
 
-##For C# - All internal method variables must be named using pascalCase
-###YES:
+## For C# - All internal method variables must be named using pascalCase
+### YES:
 ```csharp
 void DoSomeWork()
 {
@@ -40,8 +40,8 @@ void doSomeWork()
 	int IncorrectName = 2;
 }
 ```	
-##For C# - All properties must be named using CamelCase
-###YES:
+## For C# - All properties must be named using CamelCase
+### YES:
 ```csharp
 public string SampleProperty
 {
@@ -55,7 +55,7 @@ public string SampleProperty
     }
 }
 ```
-###NO:
+### NO:
 ```csharp
 public string sampleProperty
 {
@@ -70,26 +70,26 @@ public string sampleProperty
 }
 ```
 
-##We use 4 spaces for indentation not tabs.
-	###YES:
+## We use 4 spaces for indentation not tabs.
+### YES:
 		void SampleMethod(string paramName)
 		{
 		\s\s\s\sDoSomething();
 		}
 		
-	###NO:
+### NO:
 		void SampleMethod(string paramName)
 		{
 		\s\sDoSomething();
 		}
-	###NO:
+### NO:
 		void SampleMethod(string paramName)
 		{
 		\tDoSomething();
 		}
 	
 ##The open and close curly brackets must be placed in an specific line for them
-	###YES:
+### YES:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -99,7 +99,7 @@ public string sampleProperty
 		    }
 		}
 		
-	###NO:
+### NO:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -109,7 +109,7 @@ public string sampleProperty
 		}
 		
 ##Always use open and close curly brackets. It doesn't matter if it is only line what is going to go inside the if.
-	###YES:
+### YES:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -119,7 +119,7 @@ public string sampleProperty
 		    **}**
 		}
 		
-	###NO:
+### NO:
 		void MethodA(int b)
 		{
 		    int a = 1;
@@ -127,7 +127,7 @@ public string sampleProperty
 		        a = 3;
 		}
 	
-	• There is only one exception to this rule and is for validating input parameters at the beginning of a method.
+### There is only one exception to this rule and is for validating input parameters at the beginning of a method.
 	
 	void SampleMethod(TextWriter logger, CancellationToken token)
 	{
@@ -137,8 +137,8 @@ public string sampleProperty
 	    ...
 	}
 
-##Protect class variables that are only assigned in the constructor with readonly attribute
-	###YES:
+## Protect class variables that are only assigned in the constructor with readonly attribute
+### YES:
 		class SomeClass
 		{
 		    private readonly string _item;
@@ -151,7 +151,7 @@ public string sampleProperty
 		    ...
 		}
 		
-	###NO:
+### NO:
 		class SomeClass
 		{
 		    private string _item;
@@ -163,21 +163,21 @@ public string sampleProperty
 		
 		    ...
 		}
-##Prefer object initialization over setting properties after initialization
-	###YES:
+## Prefer object initialization over setting properties after initialization
+### YES:
 		var processResult = new ProcessMessageResult
 		{
 		    Success = false,
 		    QueueHasMessages = false
 		};
 		
-	###NO:
+### NO:
 		var processResult = new ProcessMessageResult();
 		processResult.Success = false;
 		processResult.QueueHasMessages = false;
 
-##Use static in class declaration when all methods are expected to be static
-	###YES:
+## Use static in class declaration when all methods are expected to be static
+### YES:
 		static class SampleClass
 		{
 		
@@ -190,7 +190,7 @@ public string sampleProperty
 		    }
 		}
 	
-	###NO:
+### NO:
 		class SampleClass
 		{
 		
@@ -204,8 +204,8 @@ public string sampleProperty
 		}
 	
 
-##The order for comparison with null is always having null at the end of the comparison
-	###YES:
+## The order for comparison with null is always having null at the end of the comparison
+### YES:
 		void SampleMethod(TextWriter logger, CancellationToken token)
 		{
 		    if (logger == null)
@@ -214,7 +214,7 @@ public string sampleProperty
 		    }
 		}
 		
-	###NO:
+### NO:
 		void SampleMethod(TextWriter logger, CancellationToken token)
 		{
 		    if (null == logger)
@@ -223,50 +223,50 @@ public string sampleProperty
 		    }
 		}
 	
-##Is better to use nameof than a "string"
-	###YES:
+## Is better to use nameof than a "string"
+### YES:
 		void SampleMethod(string paramName)
 		{
 		    if (string.IsNullOrEmpty(paramName) throw new ArgumentNullException(nameof(paramName));
 		    ...
 		}
 		
-	###NO:
+### NO:
 		void SampleMethod(string paramName)
 		{
 		    if (string.IsNullOrEmpty(paramName) throw new ArgumentNullException("paramName");
 		    ...
 		}
 		
-##Is better to use $ than string.format.
-	###YES:
+## Is better to use $ than string.format.
+### YES:
 		string sample = $"{variable1}:{variable2}";
 		
-	###NO:
+### NO:
 		string sample = string.Format("{0}:{1}", variable1, variable2);
 
 
-##Use of var
-"var" can only be used when the type of the variable can be determined by looking ONLY at the right part after the "=". 
+## Use of var
+### "var" can only be used when the type of the variable can be determined by looking ONLY at the right part after the "=". 
 
-	###YES:
+### YES:
 		var variable=1;
-	###YES:
+### YES:
 		var variable="Hello";
-	###YES:
+### YES:
 		var element = new Dictionary<string,string>();
-	###YES:
+### YES:
 		var element = (string)someClass.SomeMethod();
 		
-	###NO:
+### NO:
 		var element = someClass.SomeMethod();
-	###NO:
+### NO:
 		var element = await someClass.SomeMethod();
 		
 ##Number of parameters
 The maximum desirable number of parameters for a method is 3. Over that number there should be a reason for not using a class.
-	###YES:
+### YES:
 		void CreatePlayer(Player player)
 	
-	###NO:
+### NO:
 		void CreatePlayer(string playerName, string playerTeam, int playerAge, int playerNumber, ...)
