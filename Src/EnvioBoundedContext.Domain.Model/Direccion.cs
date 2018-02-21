@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EnvioBoundedContext.Domain.Model
 {
     // TODO: public en la clase
-    class Direccion
+    public class Direccion
     {
         public string NombreCalle { get; }
         public string NumeroPortal { get; }
@@ -19,16 +19,25 @@ namespace EnvioBoundedContext.Domain.Model
         public string Provincia { get; }
 
         // TODO: Nomenclatura y validaciones
-        public Direccion(string NombreCalle, string NumeroPortal, string Piso, string Puerta, string Escalera, string CodigoPostal, string Localidad, string Provincia)
+        public Direccion(string nombreCalle, string numeroPortal, string piso, string puerta, string escalera, string codigoPostal, string localidad, string provincia)
         {
-            this.NombreCalle = NombreCalle;
-            this.NumeroPortal = NumeroPortal;
-            this.Piso = Piso;
-            this.Puerta = Puerta;
-            this.Escalera = Escalera;
-            this.CodigoPostal = CodigoPostal;
-            this.Localidad = Localidad;
-            this.Provincia = Provincia;
+            if (string.IsNullOrWhiteSpace(nombreCalle)) throw new Exception("El nombre calle es incorrecto");
+            if (string.IsNullOrWhiteSpace(numeroPortal)) throw new Exception("El número portal es incorrecto");
+            if (string.IsNullOrWhiteSpace(piso)) throw new Exception("El piso es incorrecto");
+            if (string.IsNullOrWhiteSpace(puerta)) throw new Exception("La puerta es incorrecta");
+            if (string.IsNullOrWhiteSpace(escalera)) throw new Exception("La escalera es incorrrecta");
+            if (string.IsNullOrWhiteSpace(codigoPostal)) throw new Exception("El código postal es incorrecto");
+            if (string.IsNullOrWhiteSpace(localidad)) throw new Exception("La localidad es incorrecta");
+            if (string.IsNullOrWhiteSpace(provincia)) throw new Exception("La provincia es incorrecta");
+
+            this.NombreCalle = nombreCalle;
+            this.NumeroPortal = numeroPortal;
+            this.Piso = piso;
+            this.Puerta = puerta;
+            this.Escalera = escalera;
+            this.CodigoPostal = codigoPostal;
+            this.Localidad = localidad;
+            this.Provincia = provincia;
         }
 
         public override int GetHashCode()
