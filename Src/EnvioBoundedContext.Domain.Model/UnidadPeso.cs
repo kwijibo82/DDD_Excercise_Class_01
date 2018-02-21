@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace EnvioBoundedContext.Domain.Model
+﻿namespace EnvioBoundedContext.Domain.Model
 {
-    public class UnidadPeso : ValueObject<UnidadPeso>
+
+    public class UnidadPeso
     {
+        public static UnidadPeso Kilo = new UnidadPeso("KG", "Kilogramos");
+        public static UnidadPeso Gramo = new UnidadPeso("GR", "Gramos");
+
         public string Clave { get; }
         public string Valor { get; }
 
@@ -20,9 +17,6 @@ namespace EnvioBoundedContext.Domain.Model
             this.Clave = clave;
             this.Valor = valor;
         }
-
-        public static UnidadPeso Kilo = new UnidadPeso("KG", "Kilogramos");
-        public static UnidadPeso Gramo = new UnidadPeso("GR", "Gramos");
 
     }
 }

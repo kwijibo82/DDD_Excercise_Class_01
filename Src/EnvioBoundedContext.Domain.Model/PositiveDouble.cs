@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain
 {
@@ -35,12 +31,12 @@ namespace EnvioBoundedContext.Domain
 
         double value;
 
-        public PositiveDouble(double Value)
+        public PositiveDouble(double newValue)
         {
-            if (double.IsNegativeInfinity(Value))
+            if (double.IsNegativeInfinity(newValue))
                 throw new NotSupportedException();
 
-            value = Value < 0 ? 0 : Value;
+            value = newValue < MinValue ? MinValue.value : newValue;
         }
 
         public static implicit operator double(PositiveDouble d)

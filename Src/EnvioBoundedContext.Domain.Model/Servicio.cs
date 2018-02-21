@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain.Model
 {
-    class Servicio
+    public class Servicio
     {
         // Tanto las entidades como los VO tienen propiedades readonly
-        public Guid PoliticaID { get; }
-        private static string TiempoEstimadoEntrega { get; }
-        public string Nombre { get; }
+        public Guid PoliticaId { get; private set; }
+        public string TiempoEstimadoEntrega { get; private set; }
+        public string Nombre { get; private set; }
     }
 }
