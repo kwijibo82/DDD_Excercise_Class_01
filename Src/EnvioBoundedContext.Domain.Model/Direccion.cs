@@ -22,15 +22,15 @@ namespace EnvioBoundedContext.Domain.Model
         // TODO: Nomenclatura y validaciones
         public Direccion(string tipoVia, string nombreCalle, string numeroPortal, string piso, string puerta, string escalera, string codigoPostal, string localidad, string provincia)
         {
-            if (string.IsNullOrWhiteSpace(tipoVia)) throw new Exception("El tipo via es incorrecto");
-            if (string.IsNullOrWhiteSpace(nombreCalle)) throw new Exception("El nombre calle es incorrecto");
-            if (string.IsNullOrWhiteSpace(numeroPortal)) throw new Exception("El número portal es incorrecto");
-            if (string.IsNullOrWhiteSpace(piso)) throw new Exception("El piso es incorrecto");
-            if (string.IsNullOrWhiteSpace(puerta)) throw new Exception("La puerta es incorrecta");
-            if (string.IsNullOrWhiteSpace(escalera)) throw new Exception("La escalera es incorrrecta");
-            if (string.IsNullOrWhiteSpace(codigoPostal)) throw new Exception("El código postal es incorrecto");
-            if (string.IsNullOrWhiteSpace(localidad)) throw new Exception("La localidad es incorrecta");
-            if (string.IsNullOrWhiteSpace(provincia)) throw new Exception("La provincia es incorrecta");
+            if (string.IsNullOrWhiteSpace(tipoVia)) throw new ArgumentNullException(nameof(tipoVia));
+            if (string.IsNullOrWhiteSpace(nombreCalle)) throw new ArgumentNullException(nameof(nombreCalle));
+            if (string.IsNullOrWhiteSpace(numeroPortal)) throw new ArgumentNullException(nameof(numeroPortal));
+            if (string.IsNullOrWhiteSpace(piso)) throw new ArgumentNullException(nameof(piso));
+            if (string.IsNullOrWhiteSpace(puerta)) throw new ArgumentNullException(nameof(puerta));
+            if (string.IsNullOrWhiteSpace(escalera)) throw new ArgumentNullException(nameof(escalera));
+            if (string.IsNullOrWhiteSpace(codigoPostal)) throw new ArgumentNullException(nameof(codigoPostal));
+            if (string.IsNullOrWhiteSpace(localidad)) throw new ArgumentNullException(nameof(localidad));
+            if (string.IsNullOrWhiteSpace(provincia)) throw new ArgumentNullException(nameof(provincia));
 
             this.TipoVia = tipoVia;
             this.NombreCalle = nombreCalle;
@@ -67,6 +67,16 @@ namespace EnvioBoundedContext.Domain.Model
 
             Direccion d = (Direccion)obj;
             return (TipoVia == d.TipoVia) && (NombreCalle == d.NombreCalle) && (NumeroPortal == d.NumeroPortal) && (Piso == d.Piso) && (Puerta == d.Puerta) && (Escalera == d.Escalera) && (CodigoPostal == d.CodigoPostal) && (Localidad == d.Localidad) && (Provincia == d.Provincia);
+        }
+
+        public static bool operator == (Direccion d1, Direccion d2)
+        {
+            return true;
+        }
+
+        public static bool operator != (Direccion d1, Direccion d2)
+        {
+            return true;
         }
     }
 }
