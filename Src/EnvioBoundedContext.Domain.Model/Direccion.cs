@@ -85,15 +85,5 @@ namespace EnvioBoundedContext.Domain.Model
         {
             return !Equals(left, right);
         }
-
-        public static bool operator == (Direccion d1, Direccion d2)
-        {
-            return true;
-        }
-
-        public static bool operator != (Direccion d1, Direccion d2)
-        {
-            return true;
-        }
     }
 }
