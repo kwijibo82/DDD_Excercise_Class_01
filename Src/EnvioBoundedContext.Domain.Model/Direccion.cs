@@ -8,15 +8,15 @@ namespace EnvioBoundedContext.Domain.Model
 {
     public class Direccion : ValueObject<Direccion>
     {
-        public string TipoVia { get; }
-        public string NombreCalle { get; }
-        public string NumeroPortal { get; }
-        public string Piso { get; }
-        public string Puerta { get; }
-        public string Escalera { get; }
-        public string CodigoPostal { get; }
-        public string Localidad { get; }
-        public string Provincia { get; }
+        public string TipoVia { get; private set; }
+        public string NombreCalle { get; private set; }
+        public string NumeroPortal { get; private set; }
+        public string Piso { get; private set; }
+        public string Puerta { get; private set; }
+        public string Escalera { get; private set; }
+        public string CodigoPostal { get; private set; }
+        public string Localidad { get; private set; }
+        public string Provincia { get; private set; }
 
 
         public Direccion(string tipoVia, string nombreCalle, string numeroPortal, string piso, string puerta, string escalera, string codigoPostal, string localidad, string provincia)
