@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain.Model
 {
+    /// <summary>
+    /// Entidad Persona
+    /// </summary>
     public class Persona
     {
         public Guid Id { get; private set; }
@@ -17,6 +20,10 @@ namespace EnvioBoundedContext.Domain.Model
 
         public static Persona CreaPersona(string nombre, string apellido1, string apellido2)
         {
+            if (string.IsNullOrEmpty(nombre)) throw new ArgumentNullException("El parámetro 'nombre' está vacío.");
+            if (string.IsNullOrEmpty(apellido1)) throw new ArgumentNullException("El parámetro 'apellido1' está vacío.");
+            if (string.IsNullOrEmpty(apellido2)) throw new ArgumentNullException("El parámetro 'apellido2' está vacío.");
+
             Persona persona = new Persona()
             {
                 Id = Guid.NewGuid(),
