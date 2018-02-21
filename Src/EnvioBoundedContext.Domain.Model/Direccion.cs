@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EnvioBoundedContext.Domain.Model
 {
     // TODO: public en la clase
-    public class Direccion
+    public class Direccion : IEquatable<Direccion>
     {
         public string TipoVia { get; }
         public string NombreCalle { get; }
@@ -43,30 +43,47 @@ namespace EnvioBoundedContext.Domain.Model
             this.Provincia = provincia;
         }
 
-        public override int GetHashCode()
+        public override bool Equals(object obj)
         {
-            int hashCode = 17;
-
-            hashCode = (hashCode * 23) + (TipoVia       == null ? 0 : TipoVia.GetHashCode());
-            hashCode = (hashCode * 23) + (NombreCalle   == null ? 0 : NombreCalle.GetHashCode());
-            hashCode = (hashCode * 23) + (NumeroPortal  == null ? 0 : NumeroPortal.GetHashCode());
-            hashCode = (hashCode * 23) + (Piso          == null ? 0 : Piso.GetHashCode());
-            hashCode = (hashCode * 23) + (Puerta        == null ? 0 : Puerta.GetHashCode());
-            hashCode = (hashCode * 23) + (Escalera      == null ? 0 : Escalera.GetHashCode());
-            hashCode = (hashCode * 23) + (CodigoPostal  == null ? 0 : CodigoPostal.GetHashCode());
-            hashCode = (hashCode * 23) + (Localidad     == null ? 0 : Localidad.GetHashCode());
-            hashCode = (hashCode * 23) + (Provincia     == null ? 0 : Provincia.GetHashCode());
-
-            return hashCode;
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Direccion)obj);
         }
 
-        public override bool Equals(Object obj)
+        public bool Equals(Direccion other)
         {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return string.Equals(TipoVia, other.TipoVia, StringComparison.InvariantCulture)
+                   && string.Equals(NombreCalle, other.NombreCalle, StringComparison.InvariantCulture) && string.Equals(NumeroPortal, other.NumeroPortal, StringComparison.InvariantCulture) && string.Equals(Piso, other.Piso, StringComparison.InvariantCulture) && string.Equals(Puerta, other.Puerta, StringComparison.InvariantCulture) && string.Equals(Escalera, other.Escalera, StringComparison.InvariantCulture) && string.Equals(CodigoPostal, other.CodigoPostal, StringComparison.InvariantCulture) && string.Equals(Localidad, other.Localidad, StringComparison.InvariantCulture) && string.Equals(Provincia, other.Provincia, StringComparison.InvariantCulture);
+        }
 
-            Direccion d = (Direccion)obj;
-            return (TipoVia == d.TipoVia) && (NombreCalle == d.NombreCalle) && (NumeroPortal == d.NumeroPortal) && (Piso == d.Piso) && (Puerta == d.Puerta) && (Escalera == d.Escalera) && (CodigoPostal == d.CodigoPostal) && (Localidad == d.Localidad) && (Provincia == d.Provincia);
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = StringComparer.InvariantCulture.GetHashCode(TipoVia);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(NombreCalle);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(NumeroPortal);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Piso);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Puerta);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Escalera);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(CodigoPostal);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Localidad);
+                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Provincia);
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(Direccion left, Direccion right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Direccion left, Direccion right)
+        {
+            return !Equals(left, right);
         }
 
         public static bool operator == (Direccion d1, Direccion d2)
