@@ -4,29 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//TODO: adjustar namespace 
-namespace EnvioBoundedContext.Domain
+
+namespace EnvioBoundedContext.Domain.Model
 {
-    // TODO : Las propiedades Clave y Valor son readonly, no privadas.
-    // TODO : Aplican las mismas reglas que para un VO 
-    // TODO : Agregar constructor
-    // TODO : Cual es el proposito de GetClave y GetValor
-    public class UnidadPeso
+    public class UnidadPeso : ValueObject<UnidadPeso>
     {
-        private string Clave { get; set; }
-        private string Valor { get; set; }
+        public string Clave { get; }
+        public string Valor { get; }
 
-        public static UnidadPeso KG = new UnidadPeso{ Clave = "kgs", Valor = "kilogramo" };
-        public static UnidadPeso GR = new UnidadPeso { Clave = "grs", Valor = "gramo" };
-
-        public static string GetClave(UnidadPeso unidad)
+        public UnidadPeso(string clave, string valor)
         {
-            return unidad.Clave;
+            Requires.NotNullOrEmpty(clave, nameof(clave));
+            Requires.NotNullOrEmpty(valor, nameof(valor));
+
+            this.Clave = clave;
+            this.Valor = valor;
         }
 
-        public static string GetValor(UnidadPeso unidad)
-        {
-            return unidad.Valor;
-        }
+        public static UnidadPeso Kilo = new UnidadPeso("KG", "Kilogramos");
+        public static UnidadPeso Gramo = new UnidadPeso("GR", "Gramos");
+
     }
 }
