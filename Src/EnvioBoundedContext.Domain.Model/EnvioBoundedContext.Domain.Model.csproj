@@ -79,6 +79,7 @@
     <Compile Include="Repositories\EnvioRepository.cs" />
     <Compile Include="UnidadPeso.cs" />
     <Compile Include="Servicio.cs" />
+    <Compile Include="ValueObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

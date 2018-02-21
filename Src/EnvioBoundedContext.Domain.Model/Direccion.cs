@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EnvioBoundedContext.Domain.Model
 {
     // TODO: public en la clase
-    public class Direccion : IEquatable<Direccion>
+    public class Direccion : ValueObject<Direccion>, IEquatable<Direccion>
     {
         public string TipoVia { get; }
         public string NombreCalle { get; }
@@ -41,49 +41,6 @@ namespace EnvioBoundedContext.Domain.Model
             this.CodigoPostal = codigoPostal;
             this.Localidad = localidad;
             this.Provincia = provincia;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Direccion)obj);
-        }
-
-        public bool Equals(Direccion other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return string.Equals(TipoVia, other.TipoVia, StringComparison.InvariantCulture)
-                   && string.Equals(NombreCalle, other.NombreCalle, StringComparison.InvariantCulture) && string.Equals(NumeroPortal, other.NumeroPortal, StringComparison.InvariantCulture) && string.Equals(Piso, other.Piso, StringComparison.InvariantCulture) && string.Equals(Puerta, other.Puerta, StringComparison.InvariantCulture) && string.Equals(Escalera, other.Escalera, StringComparison.InvariantCulture) && string.Equals(CodigoPostal, other.CodigoPostal, StringComparison.InvariantCulture) && string.Equals(Localidad, other.Localidad, StringComparison.InvariantCulture) && string.Equals(Provincia, other.Provincia, StringComparison.InvariantCulture);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = StringComparer.InvariantCulture.GetHashCode(TipoVia);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(NombreCalle);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(NumeroPortal);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Piso);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Puerta);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Escalera);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(CodigoPostal);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Localidad);
-                hashCode = (hashCode * 397) ^ StringComparer.InvariantCulture.GetHashCode(Provincia);
-                return hashCode;
-            }
-        }
-
-        public static bool operator ==(Direccion left, Direccion right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(Direccion left, Direccion right)
-        {
-            return !Equals(left, right);
         }
     }
 }
