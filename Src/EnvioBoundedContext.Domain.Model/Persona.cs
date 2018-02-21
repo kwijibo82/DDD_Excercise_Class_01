@@ -1,58 +1,99 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EnvioBoundedContext.Domain.Model
 {
     /// <summary>
     /// Entidad Persona
     /// </summary>
-    public class Persona
+    public class Persona : IEquatable<Guid>
     {
-        public Guid Id { get; private set; }
-        public string Nombre { get; private set; }
-        public string Apellido1 { get; private set; }
-        public string Apellido2 { get; private set; }
-
-        public Persona() { }
-
-        public static Persona CreaPersona(string nombre, string apellido1, string apellido2)
+        // 1. Internal variables
+        private Guid _id;
+        private string _nombre;
+        private string _apellido1;
+        private string _apellido2;
+        
+        // 2. Public Properties
+        // Tanto las entidades como los VO tienen propiedades readonly
+        public Guid Id
         {
-            if (string.IsNullOrEmpty(nombre)) throw new ArgumentNullException("El parámetro 'nombre' está vacío.");
-            if (string.IsNullOrEmpty(apellido1)) throw new ArgumentNullException("El parámetro 'apellido1' está vacío.");
-            if (string.IsNullOrEmpty(apellido2)) throw new ArgumentNullException("El parámetro 'apellido2' está vacío.");
-
-            Persona persona = new Persona()
+            get
             {
-                Id = Guid.NewGuid(),
-                Nombre = nombre,
-                Apellido1 = apellido1,
-                Apellido2 = apellido2
-            };
-
-            return persona;
+                return _id;
+            }
+            private set
+            {
+                _id = value;
+            }
         }
 
+        public string Nombre
+        {
+            get
+            {
+                return _nombre;
+            }
+            private set
+            {
+                _nombre = value;
+            }
+        }
+        
+        public string Apellido1
+        {
+            get
+            {
+                return _apellido1;
+            }
+            private set
+            {
+                _apellido1 = value;
+            }
+        }
+
+        public string Apellido2
+        {
+            get
+            {
+                return _apellido2;
+            }
+            private set
+            {
+                _apellido2 = value;
+            }
+        }
+
+
+        // 3. Constructor
+        public Persona(string nombre, string apellido1, string apellido2)
+        {
+            Requires.NotNullOrEmpty(nombre, nameof(nombre));
+            Requires.NotNullOrEmpty(apellido1, nameof(apellido1));
+            Requires.NotNullOrEmpty(apellido2, nameof(apellido2));
+
+            Id = Guid.NewGuid();
+            Nombre = nombre;
+            Apellido1 = apellido1;
+            Apellido2 = apellido2;
+        }
+
+
+        // 4. Public methods
         public string ObtenerNombreCompleto()
         {
             var nombreCompleto = string.Format("{0} {1} {2}", Nombre, Apellido1, Apellido2) ;
             return nombreCompleto;
         }
 
-        public static string ObtenerDireccion()
+        public bool Equals(Guid otroId)
         {
-            return "direccion0";
+            return ((IEquatable<Guid>)Id).Equals(otroId);
         }
+        
 
-        public static IList<string> ObtenerDireccionesDestinoFavoritas()
-        {
-            IList<string> direccionesFavoritas = new List<string>
-            {
-                "direccion1",
-                "direccion2",
-                "direccion3"
-            };
+        // 5. Private methods
 
-            return direccionesFavoritas;
-        }
+
+
     }
 }
