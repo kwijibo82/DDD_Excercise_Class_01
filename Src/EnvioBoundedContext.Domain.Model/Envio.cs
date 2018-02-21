@@ -25,6 +25,41 @@ namespace EnvioBoundedContext.Domain.Model
     }
     public class Envio
     {
+        Guid id;
+        public Envio(Guid id)
+        {
+            Id = id;
+        }
+
+        public Guid Id { get; }
         public string Destinatario { get; set; }
+        public int Estado { get; set; }
+        public Servicio Servicio { get; private set; }
+        public void AsignarDireccionRecogida(Direccion nuevaDireccion)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            bool exisPreviousDireccion = DireccionEntrega != null;
+
+            if (DireccionEntrega == nuevaDireccion)
+            {
+                return;
+            }
+
+            DireccionEntrega = nuevaDireccion;
+            if (exisPreviousDireccion)
+            {
+                Servicio = null;
+            }
+            
+            //Notificar
+        }
+
+        private bool IsInReparto => Estado == 5;
+
+        public Direccion DireccionEntrega { get; private set; }
     }
 }

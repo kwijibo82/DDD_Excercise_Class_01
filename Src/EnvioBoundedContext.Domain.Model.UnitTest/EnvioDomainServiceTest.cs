@@ -8,6 +8,44 @@ using Xunit2.Should;
 
 namespace EnvioBoundedContext.Domain.Model.UnitTest
 {
+    public class AsignarDireccionCommand
+    {
+        public AsignarDireccionCommand(Guid envioId, string calle, string numero)
+        {
+
+        }
+        public Guid EnvioId { get; private set; }
+        public string Calle { get; private set; }
+        public string Numero { get; private set; }
+    }
+    public class EnvioTest
+    {
+
+        [Fact]
+        public void AsignarDireccionRecogida()
+        {
+            Envio sut = new Envio(Guid.NewGuid());
+            Direccion nuevaDireccion = new Direccion("tipo via", "via", "numero", "piso", "puerta", "escalera", "CP", "localidad", "provi");
+
+            sut.AsignarDireccionRecogida(nuevaDireccion);
+
+            sut.DireccionEntrega.ShouldBe(nuevaDireccion);
+        }
+
+        [Fact]
+        public void AsignarDireccionRecogidaPorSegundaVez()
+        {
+            Envio sut = new Envio(Guid.NewGuid());
+            Direccion nuevaDireccion = new Direccion("tipo via", "via", "numero", "piso", "puerta", "escalera", "CP", "localidad", "provi");
+            Direccion nuevaDireccion2 = new Direccion("tipo via", "via", "numero", "piso", "puerta", "escalera", "CP", "localidad", "provi");
+
+            sut.AsignarDireccionRecogida(nuevaDireccion);
+            sut.AsignarDireccionRecogida(nuevaDireccion2);
+
+            ReferenceEquals(sut.DireccionEntrega, nuevaDireccion).ShouldBe(true);
+        }
+    }
+
     public class EnvioDomainServiceTest
     {
         private EnvioDomainService _sut;
@@ -24,7 +62,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void GivenExpectedEnvioThenReturnTheSame()
         {
             //Crear un envio
-            Envio envio = new Envio
+            Envio envio = new Envio(Guid.NewGuid())
             {
                 Destinatario = "pepe"
             };

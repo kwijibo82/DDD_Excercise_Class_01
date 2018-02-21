@@ -35,5 +35,6 @@
             this.Localidad = localidad;
             this.Provincia = provincia;
         }
+
     }
 }

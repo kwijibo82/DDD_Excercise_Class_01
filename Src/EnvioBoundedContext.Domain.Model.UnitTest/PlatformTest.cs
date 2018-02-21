@@ -1,4 +1,5 @@
-﻿using TestStack.BDDfy;
+﻿using System;
+using TestStack.BDDfy;
 using Xunit;
 using Xunit2.Should;
 
@@ -43,7 +44,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         #region When
         private void CreateEnvio()
         {
-            _sut = new Envio();
+            _sut = new Envio(Guid.NewGuid());
         }
         #endregion
 
