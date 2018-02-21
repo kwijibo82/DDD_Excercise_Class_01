@@ -4,8 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//TODO: adjustar namespace 
 namespace EnvioBoundedContext.Domain
 {
+    // TODO : Las propiedades Clave y Valor son readonly, no privadas.
+    // TODO : Aplican las mismas reglas que para un VO 
+    // TODO : Agregar constructor
+    // TODO : Cual es el proposito de GetClave y GetValor
     public class UnidadPeso
     {
         private string Clave { get; set; }

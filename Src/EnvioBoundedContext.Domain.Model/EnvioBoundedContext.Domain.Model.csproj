@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Bulto.cs" />
     <Compile Include="Dimensiones.cs" />
+    <Compile Include="Direccion.cs" />
     <Compile Include="Envio.cs" />
     <Compile Include="Politica.cs" />
     <Compile Include="Peso.cs" />
