@@ -9,6 +9,7 @@ namespace EnvioBoundedContext.Domain.Model
     // TODO: public en la clase
     public class Direccion
     {
+        public string TipoVia { get; }
         public string NombreCalle { get; }
         public string NumeroPortal { get; }
         public string Piso { get; }
@@ -19,8 +20,9 @@ namespace EnvioBoundedContext.Domain.Model
         public string Provincia { get; }
 
         // TODO: Nomenclatura y validaciones
-        public Direccion(string nombreCalle, string numeroPortal, string piso, string puerta, string escalera, string codigoPostal, string localidad, string provincia)
+        public Direccion(string tipoVia, string nombreCalle, string numeroPortal, string piso, string puerta, string escalera, string codigoPostal, string localidad, string provincia)
         {
+            if (string.IsNullOrWhiteSpace(tipoVia)) throw new Exception("El tipo via es incorrecto");
             if (string.IsNullOrWhiteSpace(nombreCalle)) throw new Exception("El nombre calle es incorrecto");
             if (string.IsNullOrWhiteSpace(numeroPortal)) throw new Exception("El número portal es incorrecto");
             if (string.IsNullOrWhiteSpace(piso)) throw new Exception("El piso es incorrecto");
@@ -30,6 +32,7 @@ namespace EnvioBoundedContext.Domain.Model
             if (string.IsNullOrWhiteSpace(localidad)) throw new Exception("La localidad es incorrecta");
             if (string.IsNullOrWhiteSpace(provincia)) throw new Exception("La provincia es incorrecta");
 
+            this.TipoVia = tipoVia;
             this.NombreCalle = nombreCalle;
             this.NumeroPortal = numeroPortal;
             this.Piso = piso;
@@ -44,6 +47,7 @@ namespace EnvioBoundedContext.Domain.Model
         {
             int hashCode = 17;
 
+            hashCode = (hashCode * 23) + (TipoVia       == null ? 0 : TipoVia.GetHashCode());
             hashCode = (hashCode * 23) + (NombreCalle   == null ? 0 : NombreCalle.GetHashCode());
             hashCode = (hashCode * 23) + (NumeroPortal  == null ? 0 : NumeroPortal.GetHashCode());
             hashCode = (hashCode * 23) + (Piso          == null ? 0 : Piso.GetHashCode());
@@ -62,7 +66,7 @@ namespace EnvioBoundedContext.Domain.Model
                 return false;
 
             Direccion d = (Direccion)obj;
-            return (NombreCalle == d.NombreCalle) && (NumeroPortal == d.NumeroPortal) && (Piso == d.Piso) && (Puerta == d.Puerta) && (Escalera == d.Escalera) && (CodigoPostal == d.CodigoPostal) && (Localidad == d.Localidad) && (Provincia == d.Provincia);
+            return (TipoVia == d.TipoVia) && (NombreCalle == d.NombreCalle) && (NumeroPortal == d.NumeroPortal) && (Piso == d.Piso) && (Puerta == d.Puerta) && (Escalera == d.Escalera) && (CodigoPostal == d.CodigoPostal) && (Localidad == d.Localidad) && (Provincia == d.Provincia);
         }
     }
 }
