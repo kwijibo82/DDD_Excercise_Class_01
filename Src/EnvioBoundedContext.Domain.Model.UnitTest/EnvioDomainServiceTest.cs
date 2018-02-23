@@ -31,6 +31,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
             sut.Destinatario.ShouldBe(nuevaPersona);
         }
 
+        [Fact]
         public void AsignarDestinatarioPorSegundaVez()
         {
             Envio sut = new Envio(Guid.NewGuid());
