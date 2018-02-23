@@ -1,5 +1,7 @@
 ﻿using Common.Domain.Model;
 
+using Common.Domain.Model;
+
 namespace EnvioBoundedContext.Domain.Model
 {
     public class Dimensiones : Common.Domain.Model.Domain.ValueObject<Direccion>
