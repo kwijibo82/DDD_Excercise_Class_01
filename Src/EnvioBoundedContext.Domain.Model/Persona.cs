@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Domain.Model;
 
 namespace EnvioBoundedContext.Domain.Model
 {

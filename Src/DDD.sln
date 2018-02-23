@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvioBoundedContext.Infraes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7D9C6EFD-44CF-4A0E-9279-6B55EBF6372E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reviews", "Reviews", "{0D269EB5-9169-49F2-B314-F3FAFFD3D1BB}"
+	ProjectSection(SolutionItems) = preProject
+		EnvioBoundedContext.Domain.Model\ReadMe.md = EnvioBoundedContext.Domain.Model\ReadMe.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Domain.Model", "Common.Domain.Model\Common.Domain.Model.csproj", "{AD0AF3EB-75FA-4145-A656-8CC554093010}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +36,10 @@ Global
 		{77A6FA06-9B81-4B03-B54D-A62FEEB488FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77A6FA06-9B81-4B03-B54D-A62FEEB488FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77A6FA06-9B81-4B03-B54D-A62FEEB488FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

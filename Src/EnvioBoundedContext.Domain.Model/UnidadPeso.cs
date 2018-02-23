@@ -1,22 +1,22 @@
-﻿namespace EnvioBoundedContext.Domain.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Common.Domain.Model;
+
+
+namespace EnvioBoundedContext.Domain.Model
 {
-
-    public class UnidadPeso
+    public class UnidadPeso : Enumeration
     {
-        public static UnidadPeso Kilo = new UnidadPeso("KG", "Kilogramos");
-        public static UnidadPeso Gramo = new UnidadPeso("GR", "Gramos");
-
-        public string Clave { get; }
-        public string Valor { get; }
-
-        public UnidadPeso(string clave, string valor)
+        public UnidadPeso(string clave, string valor) : base(clave, valor)
         {
-            Requires.NotNullOrEmpty(clave, nameof(clave));
-            Requires.NotNullOrEmpty(valor, nameof(valor));
-
-            this.Clave = clave;
-            this.Valor = valor;
         }
+
+        public static UnidadPeso Kilo = new UnidadPeso("KG", "Kilogramos");
+
+        public static UnidadPeso Gramo = new UnidadPeso("GR", "Gramos");
 
     }
 }

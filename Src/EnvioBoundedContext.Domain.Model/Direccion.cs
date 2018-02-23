@@ -1,6 +1,13 @@
-﻿namespace EnvioBoundedContext.Domain.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Common.Domain.Model;
+
+namespace EnvioBoundedContext.Domain.Model
 {
-    public class Direccion : ValueObject<Direccion>
+    public class Direccion : Common.Domain.Model.ValueObject<Direccion>
     {
         public string TipoVia { get; private set; }
         public string NombreCalle { get; private set; }
@@ -35,6 +42,5 @@
             this.Localidad = localidad;
             this.Provincia = provincia;
         }
-
     }
 }
