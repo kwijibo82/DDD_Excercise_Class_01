@@ -35,10 +35,10 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void GivenExpectedEnvioThenReturnTheSame()
         {
             //Crear un envio
-            Envio envio = new Envio(Guid.NewGuid())
-            {
-                Destinatario = new Persona("pepe", "apellido1", "apellido2")
-            };
+            Envio envio = new Envio(Guid.NewGuid());
+ 
+
+            envio.AsignarDestinatario(new Persona("pepe", "apellido1", "apellido2"));
 
             this.Given(x => x.AssingNewId())
                 .And(x => x.ExpectedEnvioIsFound(envio))

@@ -66,31 +66,29 @@ namespace EnvioBoundedContext.Domain.Model
 
         public State State => _stateMachine.State;
         public Guid Id { get; }
-        public Persona Destinatario { get; set; }
+        public Persona Remitente { get; private set; }
+        public Persona Destinatario { get; private set; }
+        public Direccion DireccionEntrega { get; private set; }
+        public Direccion DireccionRecogida { get; private set; }
         public int Estado { get; set; }
         public Servicio Servicio { get; private set; }
 
-        public void AsignarDireccionRecogida(Direccion nuevaDireccion)
+        public void AsignarRemitente(Persona nuevoRemitente)
         {
             if (IsInReparto)
             {
                 throw new InvalidOperationException();
             }
 
-            bool existPreviousDireccion = DireccionRecogida != null;
-
-            if (DireccionRecogida == nuevaDireccion)
+            if (Remitente == nuevoRemitente)
             {
                 return;
             }
 
-            DireccionRecogida = nuevaDireccion;
-            
-            _stateMachine.Fire(Trigger.AsignarDireccionRecogida);
+            Remitente = nuevoRemitente;
 
-            
+            //Notificamos
 
-            //Notificar
         }
 
         public void AsignarDestinatario(Persona nuevoDestinatario)
@@ -110,6 +108,37 @@ namespace EnvioBoundedContext.Domain.Model
             //Notificamos
 
         }
+
+        public void AsignarDireccionEntrega(Direccion nuevaDireccion)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (DireccionEntrega == nuevaDireccion)
+            {
+                return;
+            }
+
+            DireccionEntrega = nuevaDireccion;
+        }
+
+        public void AsignarDireccionRecogida(Direccion nuevaDireccion)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (DireccionRecogida == nuevaDireccion)
+            {
+                return;
+            }
+
+            DireccionRecogida = nuevaDireccion;
+        }
+
 
         private bool IsInReparto => Estado == 5;
 
