@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EnvioBoundedContext.Domain.Model.Repositories;
 
 namespace EnvioBoundedContext.Domain.Model
 {
+
     public class EnvioDomainService
     {
         private readonly EnvioRepository _envioRepository;
@@ -23,14 +25,44 @@ namespace EnvioBoundedContext.Domain.Model
             return envio;
         }
     }
+
+    public enum State
+    {
+        Creado,
+        DireccionRecogidaAsignada,
+        DireccionEntregaAsignada,
+        DireccionesAsignadas,
+        ServicioCalculado,
+        BultosAgregados,
+        EnvioParaRecoger
+    }
+
+    public enum Trigger
+    {
+        AsignarDireccionRecogida,
+        AsignarDireccionEntrega,
+    }
+
     public class Envio
     {
+        Stateless.StateMachine<State, Trigger> _stateMachine;
         Guid id;
         public Envio(Guid id)
         {
             Id = id;
+            _stateMachine = new Stateless.StateMachine<State, Trigger>(State.Creado);
+
+            _stateMachine.Configure(State.Creado)
+                .Permit(Trigger.AsignarDireccionRecogida, State.DireccionRecogidaAsignada)
+                .Permit(Trigger.AsignarDireccionEntrega, State.DireccionEntregaAsignada);
+
+            _stateMachine.Configure(State.DireccionRecogidaAsignada)
+                .Permit(Trigger.AsignarDireccionEntrega, State.DireccionesAsignadas);
+                
+
         }
 
+        public State State => _stateMachine.State;
         public Guid Id { get; }
         public string Destinatario { get; set; }
         public int Estado { get; set; }
@@ -42,24 +74,28 @@ namespace EnvioBoundedContext.Domain.Model
                 throw new InvalidOperationException();
             }
 
-            bool exisPreviousDireccion = DireccionEntrega != null;
+            bool existPreviousDireccion = DireccionRecogida != null;
 
-            if (DireccionEntrega == nuevaDireccion)
+            if (DireccionRecogida == nuevaDireccion)
             {
                 return;
             }
 
-            DireccionEntrega = nuevaDireccion;
-            if (exisPreviousDireccion)
-            {
-                Servicio = null;
-            }
+            DireccionRecogida = nuevaDireccion;
             
+            _stateMachine.Fire(Trigger.AsignarDireccionRecogida);
+
+            
+
             //Notificar
         }
 
         private bool IsInReparto => Estado == 5;
 
         public Direccion DireccionEntrega { get; private set; }
+        public Direccion DireccionRecogida { get; private set; }
+
+        public IEnumerable<Bulto> Bultos { get; private set; }
+
     }
 }
