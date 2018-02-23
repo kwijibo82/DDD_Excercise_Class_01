@@ -84,6 +84,10 @@
     <Analyzer Include="..\packages\xunit.analyzers.0.8.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Domain.Model\Common.Domain.Model.csproj">
+      <Project>{AD0AF3EB-75FA-4145-A656-8CC554093010}</Project>
+      <Name>Common.Domain.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EnvioBoundedContext.Domain.Model\EnvioBoundedContext.Domain.Model.csproj">
       <Project>{A3B569EA-C0BD-4952-B492-C08DDC36AF40}</Project>
       <Name>EnvioBoundedContext.Domain.Model</Name>
