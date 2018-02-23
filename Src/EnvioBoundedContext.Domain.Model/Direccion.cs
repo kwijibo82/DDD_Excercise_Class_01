@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain.Model
 {
-    public class Direccion : ValueObject<Direccion>
+    public class Direccion : Common.Domain.Model.ValueObject<Direccion>
     {
         public string TipoVia { get; private set; }
         public string NombreCalle { get; private set; }

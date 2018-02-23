@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain.Model
 {
-    public class UnidadPeso : ValueObject<UnidadPeso>
+    public class UnidadPeso
     {
         public string Clave { get; }
         public string Valor { get; }

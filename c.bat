@@ -17,12 +17,12 @@ goto end
 
 cd Src
 
-echo * Checking all projects are using framework 4.6
-powershell ..\Build\CheckFrameworkTargetProjects.ps1 -FrameworkVersion "v4.6"
+echo * Checking all projects are using framework 4.6.1
+powershell ..\Build\CheckFrameworkTargetProjects.ps1 -FrameworkVersion "v4.6.1"
 echo.
 
-echo * Checking all projects have nuget references using 4.6
-powershell ..\Build\CheckFrameworkTargetPackages.ps1 -FrameworkVersion "net46"
+echo * Checking all projects have nuget references using 4.6.1
+powershell ..\Build\CheckFrameworkTargetPackages.ps1 -FrameworkVersion "net461"
 echo.
 
 echo * Checking assembly name - namespace consistencies

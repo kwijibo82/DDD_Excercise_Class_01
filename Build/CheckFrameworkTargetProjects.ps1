@@ -1,6 +1,6 @@
 ﻿param 
 (
-    [Parameter(Mandatory=$true)][string]$FrameworkVersion = "v4.6" 
+    [Parameter(Mandatory=$true)][string]$FrameworkVersion = "v4.6.1" 
 )
 
 $wrong = @()
