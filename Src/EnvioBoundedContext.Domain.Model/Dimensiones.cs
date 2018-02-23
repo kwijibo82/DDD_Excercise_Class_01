@@ -1,5 +1,7 @@
 ﻿// TODO: adjustar namespace
 
+using Common.Domain.Model;
+
 namespace EnvioBoundedContext.Domain.Model
 {
     public class Dimensiones

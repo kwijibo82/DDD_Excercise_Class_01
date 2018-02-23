@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EnvioBoundedContext.Domain.Model
+namespace Common.Domain.Model
 {
     public class PositiveDouble
     {
