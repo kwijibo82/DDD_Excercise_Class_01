@@ -35,31 +35,29 @@ namespace EnvioBoundedContext.Domain.Model
         }
 
         public Guid Id { get; }
-        public Persona Destinatario { get; set; }
+        public Persona Remitente { get; private set; }
+        public Persona Destinatario { get; private set; }
+        public Direccion DireccionEntrega { get; private set; }
+        public Direccion DireccionRecogida { get; private set; }
         public int Estado { get; set; }
         public Servicio Servicio { get; private set; }
 
-        public void AsignarDireccionRecogida(Direccion nuevaDireccion)
+        public void AsignarRemitente(Persona nuevoRemitente)
         {
             if (IsInReparto)
             {
                 throw new InvalidOperationException();
             }
 
-            bool exisPreviousDireccion = DireccionEntrega != null;
-
-            if (DireccionEntrega == nuevaDireccion)
+            if (Remitente == nuevoRemitente)
             {
                 return;
             }
 
-            DireccionEntrega = nuevaDireccion;
-            if (exisPreviousDireccion)
-            {
-                Servicio = null;
-            }
+            Remitente = nuevoRemitente;
 
-            //Notificar
+            //Notificamos
+
         }
 
         public void AsignarDestinatario(Persona nuevoDestinatario)
@@ -80,8 +78,37 @@ namespace EnvioBoundedContext.Domain.Model
 
         }
 
-        private bool IsInReparto => Estado == 5;
+        public void AsignarDireccionEntrega(Direccion nuevaDireccion)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
 
-        public Direccion DireccionEntrega { get; private set; }
+            if (DireccionEntrega == nuevaDireccion)
+            {
+                return;
+            }
+
+            DireccionEntrega = nuevaDireccion;
+        }
+
+        public void AsignarDireccionRecogida(Direccion nuevaDireccion)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (DireccionRecogida == nuevaDireccion)
+            {
+                return;
+            }
+
+            DireccionRecogida = nuevaDireccion;
+        }
+
+
+        private bool IsInReparto => Estado == 5;
     }
 }

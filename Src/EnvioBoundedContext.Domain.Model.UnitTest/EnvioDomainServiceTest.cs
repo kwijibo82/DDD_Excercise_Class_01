@@ -18,57 +18,6 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public string Calle { get; private set; }
         public string Numero { get; private set; }
     }
-    public class EnvioTest
-    {
-        [Fact]
-        public void AsignarNuevoDestinatario()
-        {
-            Envio sut = new Envio(Guid.NewGuid());
-            Persona nuevaPersona = new Persona("Nombre", "Apellido1", "Apellido2");
-
-            sut.AsignarDestinatario(nuevaPersona);
-
-            sut.Destinatario.ShouldBe(nuevaPersona);
-        }
-
-        [Fact]
-        public void AsignarDestinatarioPorSegundaVez()
-        {
-            Envio sut = new Envio(Guid.NewGuid());
-            Persona nuevaPersona = new Persona("Nombre", "Apellido1", "Apellido2");
-            Persona nuevaPersona2 = new Persona("Nombre", "Apellido1", "Apellido2");
-
-            sut.AsignarDestinatario(nuevaPersona);
-            sut.AsignarDestinatario(nuevaPersona2);
-
-            ReferenceEquals(sut.Destinatario, nuevaPersona2).ShouldBe(true);
-
-        }
-
-        [Fact]
-        public void AsignarDireccionRecogida()
-        {
-            Envio sut = new Envio(Guid.NewGuid());
-            Direccion nuevaDireccion = new Direccion("tipo via", "via", "numero", "piso", "puerta", "escalera", "CP", "localidad", "provi");
-
-            sut.AsignarDireccionRecogida(nuevaDireccion);
-
-            sut.DireccionEntrega.ShouldBe(nuevaDireccion);
-        }
-
-        [Fact]
-        public void AsignarDireccionRecogidaPorSegundaVez()
-        {
-            Envio sut = new Envio(Guid.NewGuid());
-            Direccion nuevaDireccion = new Direccion("tipo via", "via", "numero", "piso", "puerta", "escalera", "CP", "localidad", "provi");
-            Direccion nuevaDireccion2 = new Direccion("tipo via", "via", "numero", "piso", "puerta", "escalera", "CP", "localidad", "provi");
-
-            sut.AsignarDireccionRecogida(nuevaDireccion);
-            sut.AsignarDireccionRecogida(nuevaDireccion2);
-
-            ReferenceEquals(sut.DireccionEntrega, nuevaDireccion).ShouldBe(true);
-        }
-    }
 
     public class EnvioDomainServiceTest
     {
@@ -86,10 +35,10 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void GivenExpectedEnvioThenReturnTheSame()
         {
             //Crear un envio
-            Envio envio = new Envio(Guid.NewGuid())
-            {
-                Destinatario = new Persona("pepe", "apellido1", "apellido2")
-            };
+            Envio envio = new Envio(Guid.NewGuid());
+ 
+
+            envio.AsignarDestinatario(new Persona("pepe", "apellido1", "apellido2"));
 
             this.Given(x => x.AssingNewId())
                 .And(x => x.ExpectedEnvioIsFound(envio))

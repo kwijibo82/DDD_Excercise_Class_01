@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnvioDomainServiceTest.cs" />
+    <Compile Include="EnvioTest.cs" />
     <Compile Include="PlatformTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
