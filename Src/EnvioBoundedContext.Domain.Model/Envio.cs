@@ -22,6 +22,7 @@ namespace EnvioBoundedContext.Domain.Model
             {
                 throw new ApplicationException("Not found");
             }
+
             return envio;
         }
     }
@@ -47,6 +48,7 @@ namespace EnvioBoundedContext.Domain.Model
     {
         Stateless.StateMachine<State, Trigger> _stateMachine;
         Guid id;
+
         public Envio(Guid id)
         {
             Id = id;
@@ -64,9 +66,10 @@ namespace EnvioBoundedContext.Domain.Model
 
         public State State => _stateMachine.State;
         public Guid Id { get; }
-        public string Destinatario { get; set; }
+        public Persona Destinatario { get; set; }
         public int Estado { get; set; }
         public Servicio Servicio { get; private set; }
+
         public void AsignarDireccionRecogida(Direccion nuevaDireccion)
         {
             if (IsInReparto)
@@ -88,6 +91,24 @@ namespace EnvioBoundedContext.Domain.Model
             
 
             //Notificar
+        }
+
+        public void AsignarDestinatario(Persona nuevoDestinatario)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (Destinatario == nuevoDestinatario)
+            {
+                return;
+            }
+
+            Destinatario = nuevoDestinatario;
+
+            //Notificamos
+
         }
 
         private bool IsInReparto => Estado == 5;
