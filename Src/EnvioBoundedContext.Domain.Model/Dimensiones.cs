@@ -1,8 +1,8 @@
-﻿// TODO: adjustar namespace
+﻿using Common.Domain.Model;
 
 namespace EnvioBoundedContext.Domain.Model
 {
-    public class Dimensiones
+    public class Dimensiones : Common.Domain.Model.Domain.ValueObject<Direccion>
     {
         // TODO: constructor con validaciones
         public PositiveDouble Alto { get; private set; }
@@ -12,8 +12,8 @@ namespace EnvioBoundedContext.Domain.Model
         public Dimensiones(double alto, double ancho, double largo)
         {
             this.Alto = new PositiveDouble(alto);
-            this.Ancho = new PositiveDouble(alto);
-            this.Largo = new PositiveDouble(alto);
+            this.Ancho = new PositiveDouble(ancho);
+            this.Largo = new PositiveDouble(largo);
         }
     }
 

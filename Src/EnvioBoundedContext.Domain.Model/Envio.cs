@@ -20,21 +20,25 @@ namespace EnvioBoundedContext.Domain.Model
             {
                 throw new ApplicationException("Not found");
             }
+
             return envio;
         }
     }
+
     public class Envio
     {
         Guid id;
+
         public Envio(Guid id)
         {
             Id = id;
         }
 
         public Guid Id { get; }
-        public string Destinatario { get; set; }
+        public Persona Destinatario { get; set; }
         public int Estado { get; set; }
         public Servicio Servicio { get; private set; }
+
         public void AsignarDireccionRecogida(Direccion nuevaDireccion)
         {
             if (IsInReparto)
@@ -54,8 +58,26 @@ namespace EnvioBoundedContext.Domain.Model
             {
                 Servicio = null;
             }
-            
+
             //Notificar
+        }
+
+        public void AsignarDestinatario(Persona nuevoDestinatario)
+        {
+            if (IsInReparto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (Destinatario == nuevoDestinatario)
+            {
+                return;
+            }
+
+            Destinatario = nuevoDestinatario;
+
+            //Notificamos
+
         }
 
         private bool IsInReparto => Estado == 5;
