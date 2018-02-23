@@ -6,7 +6,7 @@ namespace EnvioBoundedContext.Domain.Model
     /// <summary>
     /// Entidad Persona
     /// </summary>
-    public class Persona : IEquatable<Persona>
+    public class Persona : Common.Domain.Model.Domain.ValueObject<Persona>
     {
         // 1. Internal variables
         private Guid _id { get; set; }
@@ -42,10 +42,6 @@ namespace EnvioBoundedContext.Domain.Model
         // 4. Public methods
         public string ObtenerNombreCompleto() => $"{Nombre} {Apellido1} {Apellido2}";
 
-        public bool Equals(Persona otraPersona)
-        {
-            return otraPersona.Id.Equals(Id);
-        }
         // 5. Private methods
 
 
