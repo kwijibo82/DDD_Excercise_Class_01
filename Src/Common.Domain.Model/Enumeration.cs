@@ -5,18 +5,21 @@ using System.Reflection;
 
 namespace Common.Domain.Model
 {
-    public abstract class Enumeration : IComparable
+    public abstract class Enumeration
     {
         public string Name { get; private set; }
 
-        public int Id { get; private set; }
+        public string Id { get; private set; }
 
         protected Enumeration()
         {
         }
 
-        protected Enumeration(int id, string name)
+        protected Enumeration(string id, string name)
         {
+            Requires.NotNullOrEmpty(id, nameof(id));
+            Requires.NotNullOrEmpty(name, nameof(name));
+
             Id = id;
             Name = name;
         }
@@ -60,18 +63,6 @@ namespace Common.Domain.Model
             return Id.GetHashCode();
         }
 
-        public static int AbsoluteDifference(Enumeration firstValue, Enumeration secondValue)
-        {
-            var absoluteDifference = Math.Abs(firstValue.Id - secondValue.Id);
-            return absoluteDifference;
-        }
-
-        public static T FromValue<T>(int value) where T : Enumeration, new()
-        {
-            var matchingItem = Parse<T, int>(value, "value", item => item.Id == value);
-            return matchingItem;
-        }
-
         public static T FromDisplayName<T>(string displayName) where T : Enumeration, new()
         {
             var matchingItem = Parse<T, string>(displayName, "display name", item => item.Name == displayName);
@@ -90,11 +81,6 @@ namespace Common.Domain.Model
             }
 
             return matchingItem;
-        }
-
-        public int CompareTo(object other)
-        {
-            return Id.CompareTo(((Enumeration)other).Id);
         }
     }
 }
