@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
+using System;
 using TestStack.BDDfy;
 using Xunit;
 using Xunit2.Should;

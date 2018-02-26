@@ -1,4 +1,5 @@
 ﻿using Common.Domain.Model;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 
 namespace EnvioBoundedContext.Domain.Model
 {

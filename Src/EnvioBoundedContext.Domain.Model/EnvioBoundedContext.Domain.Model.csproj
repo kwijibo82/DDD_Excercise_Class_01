@@ -72,16 +72,16 @@
   <ItemGroup>
     <Compile Include="Bulto.cs" />
     <Compile Include="Dimensiones.cs" />
-    <Compile Include="Direccion.cs" />
-    <Compile Include="Envio.cs" />
+    <Compile Include="EnvioAggregate\VO\Direccion.cs" />
+    <Compile Include="EnvioAggregate\Entidades\Envio.cs" />
     <Compile Include="Politica.cs" />
     <Compile Include="Peso.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RangoPrecio.cs" />
-    <Compile Include="Repositories\EnvioRepository.cs" />
+    <Compile Include="EnvioAggregate\Repositories\EnvioRepository.cs" />
     <Compile Include="UnidadPeso.cs" />
-    <Compile Include="Servicio.cs" />
+    <Compile Include="ServicioAggregate\Entidades\Servicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -95,6 +95,9 @@
       <Project>{ad0af3eb-75fa-4145-a656-8cc554093010}</Project>
       <Name>Common.Domain.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EnvioAggregate\Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

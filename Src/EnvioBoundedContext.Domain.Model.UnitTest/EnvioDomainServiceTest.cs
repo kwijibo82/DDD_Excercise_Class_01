@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using EnvioBoundedContext.Domain.Model.Repositories;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
 using Telerik.JustMock;
 using TestStack.BDDfy;
 using Xunit;
