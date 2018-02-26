@@ -142,9 +142,6 @@ namespace EnvioBoundedContext.Domain.Model
 
         private bool IsInReparto => Estado == 5;
 
-        public Direccion DireccionEntrega { get; private set; }
-        public Direccion DireccionRecogida { get; private set; }
-
         public IEnumerable<Bulto> Bultos { get; private set; }
 
     }
