@@ -4,7 +4,14 @@ namespace Common.Domain.Model
 {
     public static class Requires
     {
+        public static void NotDefaulValue<T>(T argument, string argumentName) where T : struct
+        {
+            if (argument.Equals(default(T)))
+            {
+                throw new ArgumentException(argumentName);
+            }
 
+        }
         public static void NotNull<T>(T argument, string argumentName) where T : class
         {
             if (argument == null)

@@ -53,7 +53,6 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
             sut.AsignarRemitente(nuevaPersona2);
 
             ReferenceEquals(sut.Remitente, nuevaPersona2).ShouldBe(true);
-
         }
 
         [Fact]

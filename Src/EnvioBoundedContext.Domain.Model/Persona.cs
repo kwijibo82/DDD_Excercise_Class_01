@@ -8,21 +8,16 @@ namespace EnvioBoundedContext.Domain.Model
     /// </summary>
     public class Persona : Common.Domain.Model.Domain.ValueObject<Persona>
     {
-        // 1. Internal variables
-        private Guid _id { get; set; }
-        private string _nombre;
-        private string _apellido1;
-        private string _apellido2;
 
         // 2. Public Properties
         // Tanto las entidades como los VO tienen propiedades readonly
-        public Guid Id => _id;
+        public Guid Id { get; }
 
-        public string Nombre => _nombre;
+        public string Nombre { get; }
 
-        public string Apellido1 => _apellido1;
+        public string Apellido1 { get; }
 
-        public string Apellido2 => _apellido2;
+        public string Apellido2 { get; }
 
 
         // 3. Constructor
@@ -32,10 +27,10 @@ namespace EnvioBoundedContext.Domain.Model
             Requires.NotNullOrEmpty(apellido1, nameof(apellido1));
             Requires.NotNullOrEmpty(apellido2, nameof(apellido2));
 
-            _id = Guid.NewGuid();
-            _nombre = nombre;
-            _apellido1 = apellido1;
-            _apellido2 = apellido2;
+            Id = Guid.NewGuid();
+            Nombre = nombre;
+            Apellido1 = apellido1;
+            Apellido2 = apellido2;
         }
 
 
@@ -43,8 +38,6 @@ namespace EnvioBoundedContext.Domain.Model
         public string ObtenerNombreCompleto() => $"{Nombre} {Apellido1} {Apellido2}";
 
         // 5. Private methods
-
-
 
     }
 }

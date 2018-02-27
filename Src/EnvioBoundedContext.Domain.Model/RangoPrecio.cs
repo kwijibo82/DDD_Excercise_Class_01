@@ -1,6 +1,6 @@
 ﻿namespace EnvioBoundedContext.Domain.Model
 {
-    class RangoPrecio
+    public class RangoPrecio
     {
         // TODO: Tanto las entidades como los VO tienen propiedades readonly
         // TODO: Faltan validaciones
