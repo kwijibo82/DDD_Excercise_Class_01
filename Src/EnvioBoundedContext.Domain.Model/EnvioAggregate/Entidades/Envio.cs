@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Domain.Model;
-using Common.Domain.Model.Domain;
-using EnvioBoundedContext.Domain.Model.Repositories;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
+using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 
-namespace EnvioBoundedContext.Domain.Model
+namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
 
     public class EnvioDomainService

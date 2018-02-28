@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Model;
 
-namespace EnvioBoundedContext.Domain.Model
+namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.VO
 {
     public class Direccion : Common.Domain.Model.Domain.ValueObject<Direccion>
     {

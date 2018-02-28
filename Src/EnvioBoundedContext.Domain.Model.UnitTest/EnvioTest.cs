@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
+using System;
 using Xunit;
 using Xunit2.Should;
 
