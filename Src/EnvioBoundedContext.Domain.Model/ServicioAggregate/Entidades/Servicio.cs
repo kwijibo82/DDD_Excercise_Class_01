@@ -11,6 +11,7 @@ namespace EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades
             Nombre = nombre;
         }
 
+        public ServicioId Id { get; set; }
         // Tanto las entidades como los VO tienen propiedades readonly
         public Guid PoliticaId { get; private set; }
         public string TiempoEstimadoEntrega { get; private set; }

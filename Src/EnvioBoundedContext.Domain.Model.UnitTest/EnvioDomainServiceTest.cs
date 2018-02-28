@@ -9,17 +9,6 @@ using Xunit2.Should;
 
 namespace EnvioBoundedContext.Domain.Model.UnitTest
 {
-    public class AsignarDireccionCommand
-    {
-        public AsignarDireccionCommand(Guid envioId, string calle, string numero)
-        {
-
-        }
-        public Guid EnvioId { get; private set; }
-        public string Calle { get; private set; }
-        public string Numero { get; private set; }
-    }
-
     public class EnvioDomainServiceTest
     {
         private EnvioDomainService _sut;
@@ -39,7 +28,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
             Envio envio = new Envio(Guid.NewGuid());
  
 
-            envio.AsignarDestinatario(new Persona("pepe", "apellido1", "apellido2"));
+            envio.AsignarDestinatario(new EnvioPersona("pepe", "apellido1", "apellido2"));
 
             this.Given(x => x.AssingNewId())
                 .And(x => x.ExpectedEnvioIsFound(envio))

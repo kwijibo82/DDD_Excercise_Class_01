@@ -6,9 +6,8 @@ namespace EnvioBoundedContext.Domain.Model
     /// <summary>
     /// Entidad Persona
     /// </summary>
-    public class Persona : Common.Domain.Model.Domain.ValueObject<Persona>
+    public class EnvioPersona : Common.Domain.Model.Domain.ValueObject<EnvioPersona>
     {
-
         // 2. Public Properties
         // Tanto las entidades como los VO tienen propiedades readonly
         public Guid Id { get; }
@@ -21,7 +20,7 @@ namespace EnvioBoundedContext.Domain.Model
 
 
         // 3. Constructor
-        public Persona(string nombre, string apellido1, string apellido2)
+        public EnvioPersona(string nombre, string apellido1, string apellido2)
         {
             Requires.NotNullOrEmpty(nombre, nameof(nombre));
             Requires.NotNullOrEmpty(apellido1, nameof(apellido1));

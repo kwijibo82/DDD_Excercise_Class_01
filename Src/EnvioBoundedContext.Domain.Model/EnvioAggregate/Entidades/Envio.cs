@@ -1,100 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
+using Common.Domain.Model.Domain;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
-
-    public class EnvioDomainService
-    {
-        private readonly EnvioRepository _envioRepository;
-
-        public EnvioDomainService(EnvioRepository envioRepository)
-        {
-            _envioRepository = envioRepository;
-        }
-
-        public async Task<Envio> GetOneBy(Guid envioId)
-        {
-            Envio envio = await _envioRepository.GetEnvioBy(envioId);
-            if (envio == null)
-            {
-                throw new ApplicationException("Not found");
-            }
-
-            return envio;
-        }
-    }
-
-    public enum State
-    {
-        Creado,
-        DireccionRecogidaAsignada,
-        DireccionEntregaAsignada,
-        DireccionesAsignadas,
-        ServicioCalculado,
-        BultosAgregados,
-        EnvioParaRecoger,
-        EnvioRecogido
-    }
-
-    public enum Trigger
-    {
-        AsignarDireccionRecogida,
-        AsignarDireccionEntrega,
-    }
-
-    public class EnvioId : Identity<Guid>
-    {
-        public EnvioId(Guid key)
-        {
-            Requires.NotDefaulValue(key, nameof(key));
-            Key = key;
-        }
-
-        public Guid Key { get; }
-    }
-
     public class Envio : EntityBase<EnvioId, Guid>
     {
-        readonly Stateless.StateMachine<State, Trigger> _stateMachine;
-        private List<Bulto> _bultos;
+        readonly Stateless.StateMachine<EnvioStateEnum, Trigger> _stateMachine;
+        private readonly List<Bulto> _bultos;
 
         public Envio(Guid id) : base(new EnvioId(id))
         {
-            _stateMachine = new Stateless.StateMachine<State, Trigger>(State.Creado);
+            _stateMachine = new Stateless.StateMachine<EnvioStateEnum, Trigger>(EnvioStateEnum.Creado);
 
-            _stateMachine.Configure(State.Creado)
-                .Permit(Trigger.AsignarDireccionRecogida, State.DireccionRecogidaAsignada)
-                .Permit(Trigger.AsignarDireccionEntrega, State.DireccionEntregaAsignada);
+            _stateMachine.Configure(EnvioStateEnum.Creado)
+                .Permit(Trigger.AsignarDireccionRecogida, EnvioStateEnum.DireccionRecogidaAsignada)
+                .Permit(Trigger.AsignarDireccionEntrega, EnvioStateEnum.DireccionEntregaAsignada);
 
-            _stateMachine.Configure(State.DireccionRecogidaAsignada)
-                .Permit(Trigger.AsignarDireccionEntrega, State.DireccionesAsignadas);
+            _stateMachine.Configure(EnvioStateEnum.DireccionRecogidaAsignada)
+                .Permit(Trigger.AsignarDireccionEntrega, EnvioStateEnum.DireccionesAsignadas);
 
-            _stateMachine.Configure(State.DireccionEntregaAsignada)
-                .Permit(Trigger.AsignarDireccionRecogida, State.DireccionesAsignadas);
+            _stateMachine.Configure(EnvioStateEnum.DireccionEntregaAsignada)
+                .Permit(Trigger.AsignarDireccionRecogida, EnvioStateEnum.DireccionesAsignadas);
 
             _bultos = new List<Bulto>();
         }
 
-        public State State => _stateMachine.State;
+        public ServicioId ServicioId { get; private set; }
 
-        public Persona Remitente { get; private set; }
+        public EnvioStateEnum EnvioState => _stateMachine.State;
 
-        public Persona Destinatario { get; private set; }
+        public EnvioPersona Remitente { get; private set; }
+
+        public EnvioPersona Destinatario { get; private set; }
 
         public Direccion DireccionEntrega { get; private set; }
 
         public Direccion DireccionRecogida { get; private set; }
 
-        public Servicio Servicio { get; private set; }
+        public IEnumerable<Bulto> Bultos => _bultos;
 
-        public void AsignarRemitente(Persona nuevoRemitente)
+        public void AsignarRemitente(EnvioPersona nuevoRemitente)
         {
-            if (IsInReparto)
+            if (!IsInProgress)
             {
                 throw new InvalidOperationException();
             }
@@ -109,9 +59,9 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             //Notificamos
         }
 
-        public void AsignarDestinatario(Persona nuevoDestinatario)
+        public void AsignarDestinatario(EnvioPersona nuevoDestinatario)
         {
-            if (IsInReparto)
+            if (!IsInProgress)
             {
                 throw new InvalidOperationException();
             }
@@ -128,7 +78,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
         public void AsignarDireccionEntrega(Direccion nuevaDireccion)
         {
-            if (IsInReparto)
+            if (!IsInProgress)
             {
                 throw new InvalidOperationException();
             }
@@ -139,12 +89,13 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             }
 
             DireccionEntrega = nuevaDireccion;
+
             _stateMachine.Fire(Trigger.AsignarDireccionEntrega);
         }
 
         public void AsignarDireccionRecogida(Direccion nuevaDireccion)
         {
-            if (IsInReparto)
+            if (!IsInProgress)
             {
                 throw new InvalidOperationException();
             }
@@ -157,14 +108,14 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             DireccionRecogida = nuevaDireccion;
             _stateMachine.Fire(Trigger.AsignarDireccionRecogida);
 
-            if (_stateMachine.State == State.DireccionesAsignadas)
+            if (_stateMachine.State == EnvioStateEnum.DireccionesAsignadas)
             {
                 //Notificar
             }
         }
 
-        private bool IsInReparto => _stateMachine.State == State.EnvioRecogido;
+        private bool IsInProgress => EnvioStateEnum.IsEnvioInProgress(_stateMachine.State);
 
-        public IEnumerable<Bulto> Bultos => _bultos;
+
     }
 }

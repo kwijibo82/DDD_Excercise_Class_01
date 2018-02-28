@@ -1,9 +1,10 @@
 ﻿using Common.Domain.Model;
+using Common.Domain.Model.Domain;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 
 namespace EnvioBoundedContext.Domain.Model
 {
-    public class Dimensiones : Common.Domain.Model.Domain.ValueObject<Direccion>
+    public class Dimensiones : ValueObject<Direccion>
     {
         // TODO: constructor con validaciones
         public PositiveDouble Alto { get; private set; }

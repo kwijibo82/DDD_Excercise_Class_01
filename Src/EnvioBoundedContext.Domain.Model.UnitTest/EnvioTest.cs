@@ -12,7 +12,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void AsignarNuevoDestinatario()
         {
             Envio sut = new Envio(Guid.NewGuid());
-            Persona nuevaPersona = new Persona("Nombre", "Apellido1", "Apellido2");
+            EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
 
             sut.AsignarDestinatario(nuevaPersona);
 
@@ -23,8 +23,8 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void AsignarDestinatarioPorSegundaVez()
         {
             Envio sut = new Envio(Guid.NewGuid());
-            Persona nuevaPersona = new Persona("Nombre", "Apellido1", "Apellido2");
-            Persona nuevaPersona2 = new Persona("Nombre", "Apellido1", "Apellido2");
+            EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
+            EnvioPersona nuevaPersona2 = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
 
             sut.AsignarDestinatario(nuevaPersona);
             sut.AsignarDestinatario(nuevaPersona2);
@@ -37,7 +37,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void AsignarNuevoRemitente()
         {
             Envio sut = new Envio(Guid.NewGuid());
-            Persona nuevaPersona = new Persona("Nombre", "Apellido1", "Apellido2");
+            EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
 
             sut.AsignarRemitente(nuevaPersona);
 
@@ -48,8 +48,8 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         public void AsignarRemitentePorSegundaVez()
         {
             Envio sut = new Envio(Guid.NewGuid());
-            Persona nuevaPersona = new Persona("Nombre", "Apellido1", "Apellido2");
-            Persona nuevaPersona2 = new Persona("Nombre", "Apellido1", "Apellido2");
+            EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
+            EnvioPersona nuevaPersona2 = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
 
             sut.AsignarRemitente(nuevaPersona);
             sut.AsignarRemitente(nuevaPersona2);
