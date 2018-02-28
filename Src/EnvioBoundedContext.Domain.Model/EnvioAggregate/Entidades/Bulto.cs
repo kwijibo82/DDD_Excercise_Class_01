@@ -1,5 +1,4 @@
-﻿// TODO: adjustar namespace
-namespace EnvioBoundedContext.Domain.Model
+﻿namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
     public class Bulto
     {

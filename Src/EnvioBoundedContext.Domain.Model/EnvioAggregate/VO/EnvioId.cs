@@ -2,7 +2,7 @@
 using Common.Domain.Model;
 using Common.Domain.Model.Domain;
 
-namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
+namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.VO
 {
     public class EnvioId : ValueObject<EnvioId>, Identity<Guid>
     {

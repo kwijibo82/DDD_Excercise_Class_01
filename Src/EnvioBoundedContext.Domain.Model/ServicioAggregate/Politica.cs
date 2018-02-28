@@ -1,4 +1,4 @@
-﻿namespace EnvioBoundedContext.Domain.Model
+﻿namespace EnvioBoundedContext.Domain.Model.ServicioAggregate
 {
     // TODO: agregar public
     class Politica

@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11DB24CC-A52C-4BEB-B677-0EE5A721A7E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Shared</RootNamespace>
+    <AssemblyName>Shared</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.Documents.Client, Version=1.20.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.DocumentDB.1.20.2\lib\net45\Microsoft.Azure.Documents.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Price.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesOrder.cs" />
+    <Compile Include="SalesOrder2.cs" />
+    <Compile Include="SalesOrderDetail.cs" />
+    <Compile Include="SalesOrderDetail2.cs" />
+    <Compile Include="SalesOrderDocument.cs" />
+    <Compile Include="Twitter\Entities.cs" />
+    <Compile Include="Twitter\HashTag.cs" />
+    <Compile Include="Twitter\Status.cs" />
+    <Compile Include="Twitter\User.cs" />
+    <Compile Include="Twitter\UserMention.cs" />
+    <Compile Include="Util\DocumentClientHelper.cs" />
+    <Compile Include="Util\DocumentCollectionSpec.cs" />
+    <Compile Include="Util\UnixDateTimeConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="FakeData\Status-0.json" />
+    <None Include="FakeData\Status-1.json" />
+    <None Include="FakeData\Status-10.json" />
+    <None Include="FakeData\Status-100.json" />
+    <None Include="FakeData\Status-101.json" />
+    <None Include="FakeData\Status-102.json" />
+    <None Include="FakeData\Status-103.json" />
+    <None Include="FakeData\Status-104.json" />
+    <None Include="FakeData\Status-105.json" />
+    <None Include="FakeData\Status-106.json" />
+    <None Include="FakeData\Status-107.json" />
+    <None Include="FakeData\Status-108.json" />
+    <None Include="FakeData\Status-109.json" />
+    <None Include="FakeData\Status-11.json" />
+    <None Include="FakeData\Status-110.json" />
+    <None Include="FakeData\Status-111.json" />
+    <None Include="FakeData\Status-112.json" />
+    <None Include="FakeData\Status-113.json" />
+    <None Include="FakeData\Status-114.json" />
+    <None Include="FakeData\Status-115.json" />
+    <None Include="FakeData\Status-116.json" />
+    <None Include="FakeData\Status-117.json" />
+    <None Include="FakeData\Status-118.json" />
+    <None Include="FakeData\Status-119.json" />
+    <None Include="FakeData\Status-12.json" />
+    <None Include="FakeData\Status-120.json" />
+    <None Include="FakeData\Status-121.json" />
+    <None Include="FakeData\Status-122.json" />
+    <None Include="FakeData\Status-123.json" />
+    <None Include="FakeData\Status-124.json" />
+    <None Include="FakeData\Status-125.json" />
+    <None Include="FakeData\Status-126.json" />
+    <None Include="FakeData\Status-127.json" />
+    <None Include="FakeData\Status-128.json" />
+    <None Include="FakeData\Status-129.json" />
+    <None Include="FakeData\Status-13.json" />
+    <None Include="FakeData\Status-130.json" />
+    <None Include="FakeData\Status-131.json" />
+    <None Include="FakeData\Status-132.json" />
+    <None Include="FakeData\Status-133.json" />
+    <None Include="FakeData\Status-134.json" />
+    <None Include="FakeData\Status-135.json" />
+    <None Include="FakeData\Status-136.json" />
+    <None Include="FakeData\Status-137.json" />
+    <None Include="FakeData\Status-138.json" />
+    <None Include="FakeData\Status-139.json" />
+    <None Include="FakeData\Status-14.json" />
+    <None Include="FakeData\Status-140.json" />
+    <None Include="FakeData\Status-141.json" />
+    <None Include="FakeData\Status-142.json" />
+    <None Include="FakeData\Status-143.json" />
+    <None Include="FakeData\Status-144.json" />
+    <None Include="FakeData\Status-145.json" />
+    <None Include="FakeData\Status-146.json" />
+    <None Include="FakeData\Status-147.json" />
+    <None Include="FakeData\Status-148.json" />
+    <None Include="FakeData\Status-149.json" />
+    <None Include="FakeData\Status-15.json" />
+    <None Include="FakeData\Status-150.json" />
+    <None Include="FakeData\Status-151.json" />
+    <None Include="FakeData\Status-152.json" />
+    <None Include="FakeData\Status-153.json" />
+    <None Include="FakeData\Status-154.json" />
+    <None Include="FakeData\Status-155.json" />
+    <None Include="FakeData\Status-156.json" />
+    <None Include="FakeData\Status-157.json" />
+    <None Include="FakeData\Status-158.json" />
+    <None Include="FakeData\Status-159.json" />
+    <None Include="FakeData\Status-16.json" />
+    <None Include="FakeData\Status-160.json" />
+    <None Include="FakeData\Status-161.json" />
+    <None Include="FakeData\Status-162.json" />
+    <None Include="FakeData\Status-163.json" />
+    <None Include="FakeData\Status-164.json" />
+    <None Include="FakeData\Status-165.json" />
+    <None Include="FakeData\Status-166.json" />
+    <None Include="FakeData\Status-167.json" />
+    <None Include="FakeData\Status-168.json" />
+    <None Include="FakeData\Status-169.json" />
+    <None Include="FakeData\Status-17.json" />
+    <None Include="FakeData\Status-170.json" />
+    <None Include="FakeData\Status-171.json" />
+    <None Include="FakeData\Status-172.json" />
+    <None Include="FakeData\Status-173.json" />
+    <None Include="FakeData\Status-174.json" />
+    <None Include="FakeData\Status-175.json" />
+    <None Include="FakeData\Status-176.json" />
+    <None Include="FakeData\Status-177.json" />
+    <None Include="FakeData\Status-178.json" />
+    <None Include="FakeData\Status-179.json" />
+    <None Include="FakeData\Status-18.json" />
+    <None Include="FakeData\Status-180.json" />
+    <None Include="FakeData\Status-181.json" />
+    <None Include="FakeData\Status-182.json" />
+    <None Include="FakeData\Status-183.json" />
+    <None Include="FakeData\Status-184.json" />
+    <None Include="FakeData\Status-185.json" />
+    <None Include="FakeData\Status-186.json" />
+    <None Include="FakeData\Status-187.json" />
+    <None Include="FakeData\Status-188.json" />
+    <None Include="FakeData\Status-189.json" />
+    <None Include="FakeData\Status-19.json" />
+    <None Include="FakeData\Status-190.json" />
+    <None Include="FakeData\Status-191.json" />
+    <None Include="FakeData\Status-192.json" />
+    <None Include="FakeData\Status-193.json" />
+    <None Include="FakeData\Status-194.json" />
+    <None Include="FakeData\Status-195.json" />
+    <None Include="FakeData\Status-196.json" />
+    <None Include="FakeData\Status-197.json" />
+    <None Include="FakeData\Status-198.json" />
+    <None Include="FakeData\Status-199.json" />
+    <None Include="FakeData\Status-2.json" />
+    <None Include="FakeData\Status-20.json" />
+    <None Include="FakeData\Status-200.json" />
+    <None Include="FakeData\Status-201.json" />
+    <None Include="FakeData\Status-202.json" />
+    <None Include="FakeData\Status-203.json" />
+    <None Include="FakeData\Status-204.json" />
+    <None Include="FakeData\Status-205.json" />
+    <None Include="FakeData\Status-206.json" />
+    <None Include="FakeData\Status-207.json" />
+    <None Include="FakeData\Status-208.json" />
+    <None Include="FakeData\Status-209.json" />
+    <None Include="FakeData\Status-21.json" />
+    <None Include="FakeData\Status-210.json" />
+    <None Include="FakeData\Status-211.json" />
+    <None Include="FakeData\Status-212.json" />
+    <None Include="FakeData\Status-213.json" />
+    <None Include="FakeData\Status-214.json" />
+    <None Include="FakeData\Status-215.json" />
+    <None Include="FakeData\Status-216.json" />
+    <None Include="FakeData\Status-217.json" />
+    <None Include="FakeData\Status-218.json" />
+    <None Include="FakeData\Status-219.json" />
+    <None Include="FakeData\Status-22.json" />
+    <None Include="FakeData\Status-220.json" />
+    <None Include="FakeData\Status-221.json" />
+    <None Include="FakeData\Status-222.json" />
+    <None Include="FakeData\Status-223.json" />
+    <None Include="FakeData\Status-224.json" />
+    <None Include="FakeData\Status-225.json" />
+    <None Include="FakeData\Status-226.json" />
+    <None Include="FakeData\Status-227.json" />
+    <None Include="FakeData\Status-228.json" />
+    <None Include="FakeData\Status-229.json" />
+    <None Include="FakeData\Status-23.json" />
+    <None Include="FakeData\Status-230.json" />
+    <None Include="FakeData\Status-231.json" />
+    <None Include="FakeData\Status-232.json" />
+    <None Include="FakeData\Status-233.json" />
+    <None Include="FakeData\Status-234.json" />
+    <None Include="FakeData\Status-235.json" />
+    <None Include="FakeData\Status-236.json" />
+    <None Include="FakeData\Status-237.json" />
+    <None Include="FakeData\Status-238.json" />
+    <None Include="FakeData\Status-239.json" />
+    <None Include="FakeData\Status-24.json" />
+    <None Include="FakeData\Status-240.json" />
+    <None Include="FakeData\Status-241.json" />
+    <None Include="FakeData\Status-242.json" />
+    <None Include="FakeData\Status-243.json" />
+    <None Include="FakeData\Status-244.json" />
+    <None Include="FakeData\Status-245.json" />
+    <None Include="FakeData\Status-246.json" />
+    <None Include="FakeData\Status-247.json" />
+    <None Include="FakeData\Status-248.json" />
+    <None Include="FakeData\Status-249.json" />
+    <None Include="FakeData\Status-25.json" />
+    <None Include="FakeData\Status-250.json" />
+    <None Include="FakeData\Status-26.json" />
+    <None Include="FakeData\Status-27.json" />
+    <None Include="FakeData\Status-28.json" />
+    <None Include="FakeData\Status-29.json" />
+    <None Include="FakeData\Status-3.json" />
+    <None Include="FakeData\Status-30.json" />
+    <None Include="FakeData\Status-31.json" />
+    <None Include="FakeData\Status-32.json" />
+    <None Include="FakeData\Status-33.json" />
+    <None Include="FakeData\Status-34.json" />
+    <None Include="FakeData\Status-35.json" />
+    <None Include="FakeData\Status-36.json" />
+    <None Include="FakeData\Status-37.json" />
+    <None Include="FakeData\Status-38.json" />
+    <None Include="FakeData\Status-39.json" />
+    <None Include="FakeData\Status-4.json" />
+    <None Include="FakeData\Status-40.json" />
+    <None Include="FakeData\Status-41.json" />
+    <None Include="FakeData\Status-42.json" />
+    <None Include="FakeData\Status-43.json" />
+    <None Include="FakeData\Status-44.json" />
+    <None Include="FakeData\Status-45.json" />
+    <None Include="FakeData\Status-46.json" />
+    <None Include="FakeData\Status-47.json" />
+    <None Include="FakeData\Status-48.json" />
+    <None Include="FakeData\Status-49.json" />
+    <None Include="FakeData\Status-5.json" />
+    <None Include="FakeData\Status-50.json" />
+    <None Include="FakeData\Status-51.json" />
+    <None Include="FakeData\Status-52.json" />
+    <None Include="FakeData\Status-53.json" />
+    <None Include="FakeData\Status-54.json" />
+    <None Include="FakeData\Status-55.json" />
+    <None Include="FakeData\Status-56.json" />
+    <None Include="FakeData\Status-57.json" />
+    <None Include="FakeData\Status-58.json" />
+    <None Include="FakeData\Status-59.json" />
+    <None Include="FakeData\Status-6.json" />
+    <None Include="FakeData\Status-60.json" />
+    <None Include="FakeData\Status-61.json" />
+    <None Include="FakeData\Status-62.json" />
+    <None Include="FakeData\Status-63.json" />
+    <None Include="FakeData\Status-64.json" />
+    <None Include="FakeData\Status-65.json" />
+    <None Include="FakeData\Status-66.json" />
+    <None Include="FakeData\Status-67.json" />
+    <None Include="FakeData\Status-68.json" />
+    <None Include="FakeData\Status-69.json" />
+    <None Include="FakeData\Status-7.json" />
+    <None Include="FakeData\Status-70.json" />
+    <None Include="FakeData\Status-71.json" />
+    <None Include="FakeData\Status-72.json" />
+    <None Include="FakeData\Status-73.json" />
+    <None Include="FakeData\Status-74.json" />
+    <None Include="FakeData\Status-75.json" />
+    <None Include="FakeData\Status-76.json" />
+    <None Include="FakeData\Status-77.json" />
+    <None Include="FakeData\Status-78.json" />
+    <None Include="FakeData\Status-79.json" />
+    <None Include="FakeData\Status-8.json" />
+    <None Include="FakeData\Status-80.json" />
+    <None Include="FakeData\Status-81.json" />
+    <None Include="FakeData\Status-82.json" />
+    <None Include="FakeData\Status-83.json" />
+    <None Include="FakeData\Status-84.json" />
+    <None Include="FakeData\Status-85.json" />
+    <None Include="FakeData\Status-86.json" />
+    <None Include="FakeData\Status-87.json" />
+    <None Include="FakeData\Status-88.json" />
+    <None Include="FakeData\Status-89.json" />
+    <None Include="FakeData\Status-9.json" />
+    <None Include="FakeData\Status-90.json" />
+    <None Include="FakeData\Status-91.json" />
+    <None Include="FakeData\Status-92.json" />
+    <None Include="FakeData\Status-93.json" />
+    <None Include="FakeData\Status-94.json" />
+    <None Include="FakeData\Status-95.json" />
+    <None Include="FakeData\Status-96.json" />
+    <None Include="FakeData\Status-97.json" />
+    <None Include="FakeData\Status-98.json" />
+    <None Include="FakeData\Status-99.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FakeData\Generator.js" />
+    <Content Include="JS\BulkImport.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.20.2\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.20.2\build\Microsoft.Azure.DocumentDB.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Azure.DocumentDB.1.20.2\build\Microsoft.Azure.DocumentDB.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Azure.DocumentDB.1.20.2\build\Microsoft.Azure.DocumentDB.targets'))" />
+  </Target>
+</Project>

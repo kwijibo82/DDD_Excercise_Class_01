@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Domain.Model;
 
-namespace EnvioBoundedContext.Domain.Model
+namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.VO
 {
     /// <summary>
     /// Entidad Persona

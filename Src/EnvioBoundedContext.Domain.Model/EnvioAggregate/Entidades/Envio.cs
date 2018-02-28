@@ -6,7 +6,7 @@ using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
-    public class Envio : EntityBase<EnvioId, Guid>
+    public class Envio : AggregateRoot<EnvioId, Guid>
     {
         readonly Stateless.StateMachine<EnvioStateEnum, Trigger> _stateMachine;
         private readonly List<Bulto> _bultos;

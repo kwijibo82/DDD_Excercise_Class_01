@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocDbSamples", "DocDbSamples\DocDbSamples.csproj", "{4E3D5200-7102-4E0F-BE7F-D0B5512DCB57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{11DB24CC-A52C-4BEB-B677-0EE5A721A7E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E3D5200-7102-4E0F-BE7F-D0B5512DCB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3D5200-7102-4E0F-BE7F-D0B5512DCB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3D5200-7102-4E0F-BE7F-D0B5512DCB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3D5200-7102-4E0F-BE7F-D0B5512DCB57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11DB24CC-A52C-4BEB-B677-0EE5A721A7E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11DB24CC-A52C-4BEB-B677-0EE5A721A7E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11DB24CC-A52C-4BEB-B677-0EE5A721A7E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11DB24CC-A52C-4BEB-B677-0EE5A721A7E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2F7EF20-5512-4C55-A006-610FE79F4EAE}
+	EndGlobalSection
+EndGlobal

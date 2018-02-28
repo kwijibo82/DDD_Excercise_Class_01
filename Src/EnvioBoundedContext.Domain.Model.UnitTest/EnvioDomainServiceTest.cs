@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using Telerik.JustMock;
 using TestStack.BDDfy;
 using Xunit;
@@ -26,7 +27,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         {
             //Crear un envio
             Envio envio = new Envio(Guid.NewGuid());
- 
+
 
             envio.AsignarDestinatario(new EnvioPersona("pepe", "apellido1", "apellido2"));
 
@@ -51,13 +52,13 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
             Mock.Arrange(() => envioRepository.GetEnvioBy(envioId)).Returns(Task.FromResult<Envio>(null));
 
             //LLamada y verificacion
-            await Assert.ThrowsAsync<ApplicationException>(()=> _sut.GetOneBy(envioId));
-            
+            await Assert.ThrowsAsync<ApplicationException>(() => _sut.GetOneBy(envioId));
+
         }
 
         #region Given
 
-        
+
 
         private void AssingNewId()
         {
@@ -73,7 +74,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
         #region When
         private async Task CallGetOneByEnvio()
         {
-            response =  await _sut.GetOneBy(envioParameter);
+            response = await _sut.GetOneBy(envioParameter);
         }
         #endregion
 
@@ -85,7 +86,7 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
 
         private void EnvioHasTheSameValues(Envio envio)
         {
-           // response.Destinatario.ShouldBeEqual(envio.Destinatario);
+            // response.Destinatario.ShouldBeEqual(envio.Destinatario);
         }
         #endregion
     }
