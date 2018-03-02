@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.Azure.Documents;
 
 namespace Shared
@@ -9,20 +11,17 @@ namespace Shared
     /// When working with objects extending from Resource you get the benefit of not having to 
     /// dynamically cast between Document and your POCO.
     /// </summary>
-    public class SalesOrderDocument : Document
+    public class SalesOrderDocument : Resource
     {
-        public SalesOrderDocument()
-        {
-        }
-
         public string PurchaseOrderNumber { get; set; }
+        public int? TimeToLive { get; set; }
         public DateTime OrderDate { get; set; }
-        public DateTime ShipDate { get; set; }
+        public DateTime ShippedDate { get; set; }
         public string AccountNumber { get; set; }
         public decimal SubTotal { get; set; }
-        public decimal TaxAmt { get; set; }
+        public decimal TaxAmount { get; set; }
         public decimal Freight { get; set; }
         public decimal TotalDue { get; set; }
-        public SalesOrderDetail[] Items { get; set; }
+        public IEnumerable<SalesOrderDetailVO> Items { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocDbSamples.DDD;
 
 namespace DocDbSamples
 {
@@ -10,7 +11,8 @@ namespace DocDbSamples
     {
         static void Main(string[] args)
         {
-            DocumentManagment.DocumentManagerSample.RunSample();
+            //DocumentManagment.DocumentManagerSample.RunSample();
+            DddSample.RunSample();
         }
     }
 }
