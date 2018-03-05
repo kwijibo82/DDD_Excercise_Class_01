@@ -6,8 +6,6 @@ using Common.Domain.Model.EventAggregator;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
-using Unity;
-using Unity.Attributes;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {

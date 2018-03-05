@@ -4,7 +4,6 @@ using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using System;
-using Unity;
 using Xunit;
 using Xunit2.Should;
 

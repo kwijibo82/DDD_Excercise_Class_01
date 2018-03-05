@@ -15,7 +15,7 @@ namespace DomainEventsDispacher
 
             //EventAggregatorWithContainer();
 
-            //EventAgregatorReactive();
+            EventAgregatorReactive();
 
             LogEventAggregator();
 

@@ -1,10 +1,6 @@
 ﻿using Common.Domain.Model.Bases;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents
 {
