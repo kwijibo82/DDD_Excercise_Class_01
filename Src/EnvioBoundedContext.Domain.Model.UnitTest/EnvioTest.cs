@@ -1,6 +1,10 @@
-﻿using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
+﻿using Common.Domain.Model;
+using Common.Domain.Model.EventAggregator;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using System;
+using Unity;
 using Xunit;
 using Xunit2.Should;
 
@@ -8,15 +12,48 @@ namespace EnvioBoundedContext.Domain.Model.UnitTest
 {
     public class EnvioTest
     {
-        [Fact]
-        public void AsignarNuevoDestinatario()
+        //[Fact]
+        //public void AsignarNuevoDestinatario()
+        //{
+        //    Envio sut = new Envio(Guid.NewGuid());
+        //    EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
+
+        //    sut.AsignarDestinatario(nuevaPersona);
+
+        //    sut.Destinatario.ShouldBe(nuevaPersona);
+        //}
+
+        bool eventoEjecutado;
+
+        void EventoEjecutadoSpy(DestinatarioAsignado dest)
         {
-            Envio sut = new Envio(Guid.NewGuid());
-            EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
+            eventoEjecutado = true;
+        }
 
-            sut.AsignarDestinatario(nuevaPersona);
+        public EnvioTest()
+        {
+            ContainerFactory.EnsureContainer();
+            ContainerFactory.RegisterAsSingleton<IEventAggregatorReactive, EventAggregatorReactive>();
+        }
 
-            sut.Destinatario.ShouldBe(nuevaPersona);
+        [Fact]
+        public void AsignarNuevoDestinatario( )
+        {
+
+            IEventAggregatorReactive domainDispacher = ContainerFactory.Resolve<IEventAggregatorReactive>();
+            
+            using (domainDispacher.GetEvent<DestinatarioAsignado>().Subscribe(c=> EventoEjecutadoSpy(c))) 
+            {
+                Envio sut = new Envio(Guid.NewGuid());
+                EnvioPersona nuevaPersona = new EnvioPersona("Nombre", "Apellido1", "Apellido2");
+
+                sut.AsignarDestinatario(nuevaPersona);
+
+                sut.Destinatario.ShouldBe(nuevaPersona);
+
+            }
+
+            eventoEjecutado.ShouldBe(true);
         }
 
         [Fact]

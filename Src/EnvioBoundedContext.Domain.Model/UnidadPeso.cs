@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Domain.Model;
+﻿using Common.Domain.Model;
 
 
 namespace EnvioBoundedContext.Domain.Model

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Domain.Model;
 using Common.Domain.Model.Domain;
+using Common.Domain.Model.EventAggregator;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
+using Unity;
+using Unity.Attributes;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
@@ -10,6 +15,8 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
     {
         readonly Stateless.StateMachine<EnvioState, Trigger> _stateMachine;
         private readonly List<Bulto> _bultos;
+ 
+
 
         public Envio(Guid id) : base(new EnvioId(id))
         {
@@ -26,6 +33,8 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
                 .Permit(Trigger.AsignarDireccionRecogida, EnvioState.DireccionesAsignadas);
 
             _bultos = new List<Bulto>();
+
+            
         }
 
         public ServicioId ServicioId { get; private set; }
@@ -73,7 +82,8 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
             Destinatario = nuevoDestinatario;
 
-            //Notificamos
+            IEventAggregatorReactive eventAggregator = ContainerFactory.Resolve<IEventAggregatorReactive>();
+            eventAggregator.Raise<DestinatarioAsignado>(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, this.Id));
         }
 
         public void AsignarDireccionEntrega(Direccion nuevaDireccion)
