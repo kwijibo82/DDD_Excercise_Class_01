@@ -16,9 +16,13 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
  
 
 
+        private EnvioState myState { get; set; }
+
         public Envio(Guid id) : base(new EnvioId(id))
         {
-            _stateMachine = new Stateless.StateMachine<EnvioState, Trigger>(EnvioState.Creado);
+
+            _stateMachine = new Stateless.StateMachine<EnvioState, Trigger>(() => myState,
+    s => myState = s);
 
             _stateMachine.Configure(EnvioState.Creado)
                 .Permit(Trigger.AsignarDireccionRecogida, EnvioState.DireccionRecogidaAsignada)
@@ -30,6 +34,8 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             _stateMachine.Configure(EnvioState.DireccionEntregaAsignada)
                 .Permit(Trigger.AsignarDireccionRecogida, EnvioState.DireccionesAsignadas);
 
+            myState = EnvioState.Creado;
+
             _bultos = new List<Bulto>();
 
             
@@ -37,7 +43,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
         public ServicioId ServicioId { get; private set; }
 
-        public EnvioState EnvioState => _stateMachine.State;
+        public EnvioState EnvioState => myState;
 
         public EnvioPersona Remitente { get; private set; }
 

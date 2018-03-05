@@ -97,7 +97,7 @@
     <Compile Include="EnvioAggregate\DomainEvents\DestinatarioAsignado.cs" />
     <Compile Include="EnvioAggregate\Entidades\Bulto.cs" />
     <Compile Include="Dimensiones.cs" />
-    <Compile Include="EnvioAggregate\Entidades\EnvioStateEnum.cs" />
+    <Compile Include="EnvioAggregate\Entidades\EnvioState.cs" />
     <Compile Include="EnvioAggregate\VO\EnvioId.cs" />
     <Compile Include="EnvioAggregate\Entidades\Trigger.cs" />
     <Compile Include="EnvioAggregate\VO\Direccion.cs" />
