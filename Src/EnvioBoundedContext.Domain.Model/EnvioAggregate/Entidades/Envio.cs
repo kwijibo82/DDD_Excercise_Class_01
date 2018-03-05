@@ -8,29 +8,29 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
     public class Envio : AggregateRoot<EnvioId, Guid>
     {
-        readonly Stateless.StateMachine<EnvioStateEnum, Trigger> _stateMachine;
+        readonly Stateless.StateMachine<EnvioState, Trigger> _stateMachine;
         private readonly List<Bulto> _bultos;
 
         public Envio(Guid id) : base(new EnvioId(id))
         {
-            _stateMachine = new Stateless.StateMachine<EnvioStateEnum, Trigger>(EnvioStateEnum.Creado);
+            _stateMachine = new Stateless.StateMachine<EnvioState, Trigger>(EnvioState.Creado);
 
-            _stateMachine.Configure(EnvioStateEnum.Creado)
-                .Permit(Trigger.AsignarDireccionRecogida, EnvioStateEnum.DireccionRecogidaAsignada)
-                .Permit(Trigger.AsignarDireccionEntrega, EnvioStateEnum.DireccionEntregaAsignada);
+            _stateMachine.Configure(EnvioState.Creado)
+                .Permit(Trigger.AsignarDireccionRecogida, EnvioState.DireccionRecogidaAsignada)
+                .Permit(Trigger.AsignarDireccionEntrega, EnvioState.DireccionEntregaAsignada);
 
-            _stateMachine.Configure(EnvioStateEnum.DireccionRecogidaAsignada)
-                .Permit(Trigger.AsignarDireccionEntrega, EnvioStateEnum.DireccionesAsignadas);
+            _stateMachine.Configure(EnvioState.DireccionRecogidaAsignada)
+                .Permit(Trigger.AsignarDireccionEntrega, EnvioState.DireccionesAsignadas);
 
-            _stateMachine.Configure(EnvioStateEnum.DireccionEntregaAsignada)
-                .Permit(Trigger.AsignarDireccionRecogida, EnvioStateEnum.DireccionesAsignadas);
+            _stateMachine.Configure(EnvioState.DireccionEntregaAsignada)
+                .Permit(Trigger.AsignarDireccionRecogida, EnvioState.DireccionesAsignadas);
 
             _bultos = new List<Bulto>();
         }
 
         public ServicioId ServicioId { get; private set; }
 
-        public EnvioStateEnum EnvioState => _stateMachine.State;
+        public EnvioState EnvioState => _stateMachine.State;
 
         public EnvioPersona Remitente { get; private set; }
 
@@ -108,13 +108,13 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             DireccionRecogida = nuevaDireccion;
             _stateMachine.Fire(Trigger.AsignarDireccionRecogida);
 
-            if (_stateMachine.State == EnvioStateEnum.DireccionesAsignadas)
+            if (_stateMachine.State == EnvioState.DireccionesAsignadas)
             {
                 //Notificar
             }
         }
 
-        private bool IsInProgress => EnvioStateEnum.IsEnvioInProgress(_stateMachine.State);
+        private bool IsInProgress => EnvioState.IsEnvioInProgress(_stateMachine.State);
 
 
     }
