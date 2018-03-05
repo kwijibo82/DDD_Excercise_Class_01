@@ -72,7 +72,6 @@
   <ItemGroup>
     <Compile Include="EnvioAggregate\Entidades\Bulto.cs" />
     <Compile Include="Dimensiones.cs" />
-    <Compile Include="EnvioAggregate\Entidades\EnvioDomainService.cs" />
     <Compile Include="EnvioAggregate\Entidades\EnvioStateEnum.cs" />
     <Compile Include="EnvioAggregate\VO\EnvioId.cs" />
     <Compile Include="EnvioAggregate\Entidades\Trigger.cs" />
