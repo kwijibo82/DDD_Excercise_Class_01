@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
@@ -41,10 +39,10 @@ namespace DocDbSamples.DDD
 
         private static async Task RunDocumentDemo()
         {
-            string key = "SalesOrder6";
+            Guid key = Guid.NewGuid();
             SalesOrderAggregate salesOrder = GetAggregateSample(key, new Random().Next(5, 15));
             await UpsertDocumentTypeAsync(salesOrder);
-            SalesOrderAggregate salesOrderRead = await ReadDocumentAsync(key);
+            SalesOrderAggregate salesOrderRead = await ReadDocumentAsync(key.ToString());
         }
 
         private static async Task<SalesOrderAggregate> ReadDocumentAsync(string key)
@@ -53,7 +51,7 @@ namespace DocDbSamples.DDD
 
             DocumentResponse<SalesOrderDocument> response = await _client.ReadDocumentAsync<SalesOrderDocument>(documentUri);
             Console.WriteLine($"Read SalesOrderDocument - Request charge {response.RequestCharge}");
-            return new SalesOrderAggregate(response.Document.Id
+            return new SalesOrderAggregate(Guid.Parse( response.Document.Id)
                 , response.Document.PurchaseOrderNumber
                 , response.Document.TimeToLive
                 , response.Document.OrderDate
@@ -66,17 +64,18 @@ namespace DocDbSamples.DDD
 
         private static async Task RunStrongTypeDocumentsDemo()
         {
-            string key = "SalesOrder1";
+            //string key = "SalesOrder1";
+            Guid key = Guid.NewGuid();
             SalesOrderAggregate salesOrder = GetAggregateSample(key, new Random().Next(5, 15));
             await UpsertStrongTypeAsync(salesOrder);
-            SalesOrderAggregate salesOrderRead = await ReadStrongTypeFromDocumentAsync(key);
+            SalesOrderAggregate salesOrderRead = await ReadStrongTypeFromDocumentAsync(key.ToString());
         }
 
         private static async Task UpsertDocumentTypeAsync(SalesOrderAggregate salesOrder)
         {
             SalesOrderDocument document = new SalesOrderDocument
             {
-                Id = salesOrder.Id,
+                Id = salesOrder.Id.ToString(),
                 AccountNumber = salesOrder.AccountNumber,
                 Freight = salesOrder.Freight,
                 TimeToLive = salesOrder.TimeToLive,
@@ -105,12 +104,12 @@ namespace DocDbSamples.DDD
 
         private static async Task<SalesOrderAggregate> ReadStrongTypeFromDocumentAsync(string id)
         {
-            var response = await _client.ReadDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, id));
+            ResourceResponse<Document> response = await _client.ReadDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, id));
             Console.WriteLine("Read strong type by Id {0}", response.RequestCharge);
             return (SalesOrderAggregate)(dynamic)response.Resource;
         }
 
-        private static SalesOrderAggregate GetAggregateSample(string documentId, int detailCount)
+        private static SalesOrderAggregate GetAggregateSample(Guid documentId, int detailCount)
         {
             return new SalesOrderAggregate(documentId, "algo", 60 * 60 * 24 * 30, new DateTime(2005, 7, 1), DateTime.MinValue, 419.4589m, 12.5838m,
                 472.3108m, 985.018m, "account1", Enumerable.Range(0, detailCount).Select(i => new SalesOrderDetailVO(i, i, i, i)));

@@ -26,6 +26,7 @@ namespace DomainEventsDispacher
         {
             var eventAgregator = new EventAggregatorReactive();
             using (eventAgregator.GetEvent<AvisadoEstas>().Subscribe(ActionAvisadoEstas()))
+            using (eventAgregator.GetEvent<AvisadoEstas>().Subscribe(ev=>HazEsto(ev)))
             using (eventAgregator.GetEvent<AvisadoEstas>().Subscribe(ev => { new EventListener().Handle(ev); }))
             {
                 eventAgregator.Raise(new AvisadoEstas("Daniel"));
@@ -51,14 +52,19 @@ namespace DomainEventsDispacher
 
             IContainer container = mainBuilder.Build();
 
+
             IEventAggregatorCaller caller = container.Resolve<IEventAggregatorCaller>();
 
+            EventDispacher dispacher = container.Resolve<EventDispacher>();
+
+            dispacher.Raise(new AvisadoEstas("Daniel"));
             caller.Algo();
         }
 
         private static void StaticEventAggregator()
         {
             using (DomainEvents.Register(ActionAvisadoEstas()))
+            using (DomainEvents.Register<AvisadoEstas>(HazEsto))
             {
 
                 DomainEvents.Raise(new AvisadoEstas("Daniel"));
@@ -88,6 +94,11 @@ namespace DomainEventsDispacher
         static Action<AvisadoEstas> ActionAvisadoEstas()
         {
             return avisadoEstas => { Console.WriteLine($"Evento capturado {avisadoEstas} en onAvisadoEstas"); };
+        }
+
+        static void HazEsto(AvisadoEstas avisadoEstas)
+        {
+            Console.WriteLine($"Evento capturado {avisadoEstas} en HazEsto");
         }
 
         static void onLog(DomainEvent avisadoEstas)

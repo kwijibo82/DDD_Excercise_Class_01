@@ -8,7 +8,7 @@ namespace Shared
     {
         private readonly IList<SalesOrderDetailVO> _details;
 
-        public SalesOrderAggregate(string id, string purchaseOrderNumber, int? ttl, DateTime orderDate, DateTime shippedDate, decimal subTotal, decimal taxAmount, decimal freight, decimal totalDue, string accountNumber, IEnumerable<SalesOrderDetailVO> items)
+        public SalesOrderAggregate(Guid id, string purchaseOrderNumber, int? ttl, DateTime orderDate, DateTime shippedDate, decimal subTotal, decimal taxAmount, decimal freight, decimal totalDue, string accountNumber, IEnumerable<SalesOrderDetailVO> items)
         {
             Id = id;
             _details = new List<SalesOrderDetailVO>(items);
@@ -25,7 +25,7 @@ namespace Shared
         //Any of the supported JSON.NET attributes here are supported, including the use of JsonConverters
         //if you really want fine grained control over the process
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; }
+        public Guid Id { get; }
         public string PurchaseOrderNumber { get; }
         [JsonProperty(PropertyName = "ttl", NullValueHandling = NullValueHandling.Ignore)]
         public int? TimeToLive { get; }

@@ -54,8 +54,8 @@ namespace DocDbSamples.DocumentManagment
         private static readonly string collectionName = "document-samples";
 
         // Read config
-        private static readonly string endpointUrl = "<<endpoint>>";
-        private static readonly string authorizationKey = "<<authKey>>";
+        private static readonly string endpointUrl = "https://ddd-loc-euwe-main.documents.azure.com:443/";
+        private static readonly string authorizationKey = "yjG8yKqphUiW6ZzXWswQHlKNYdHcXmJEUViF3KW0aDFhKXy2qwEBbInrfTKWwavRkXU8hUDYad9kXJUJRHg8aw==";
 
         //Reusable instance of DocumentClient which represents the connection to a DocumentDB endpoint
         private static DocumentClient _client;
@@ -552,7 +552,7 @@ namespace DocDbSamples.DocumentManagment
             await _client.CreateDocumentCollectionIfNotExistsAsync(
                 UriFactory.CreateDatabaseUri(databaseName),
                 collectionDefinition,
-                new RequestOptions { OfferThroughput = 1000 });
+                new RequestOptions { OfferThroughput = 400 });
         }
     }
 }
