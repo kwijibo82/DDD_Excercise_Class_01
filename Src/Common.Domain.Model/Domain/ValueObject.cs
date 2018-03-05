@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml.Linq;
 
 namespace Common.Domain.Model.Domain
 {

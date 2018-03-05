@@ -1,14 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
-using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
-using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
-using Telerik.JustMock;
-using TestStack.BDDfy;
-using Xunit;
-using Xunit2.Should;
-
-namespace EnvioBoundedContext.Domain.Model.UnitTest
+﻿namespace EnvioBoundedContext.Domain.Model.UnitTest
 {
     //public class EnvioDomainServiceTest
     //{
