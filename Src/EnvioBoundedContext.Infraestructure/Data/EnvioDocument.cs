@@ -32,9 +32,9 @@ namespace EnvioBoundedContext.Infraestructure.Data
             {
                 var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
                 DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
-             
+
                 return new Envio(Guid.Parse(response.Document.Id)
-                    , response.Document.EnvioState
+                    , EnvioState.FromValue<EnvioState>(response.Document.EnvioStateKey)
                     , response.Document.ServicioId
                     , response.Document.Remitente
                     , response.Document.Destinatario
