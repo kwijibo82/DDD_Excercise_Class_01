@@ -12,15 +12,15 @@ namespace EnvioBoundedContext.Infraestructure.Data
 {
     public class EnvioRepositoryDocDB : EnvioRepository
     {
-        private const string databaseName = "EnviosDB";
-        private const string collectionName = "Envios";
+        private const string DatabaseName = "EnviosDB";
+        private const string CollectionName = "Envios";
 
-        private const string endpointUrl = "https://ddd-loc-euwe-main.documents.azure.com:443/";
-        private const string authorizationKey = "ZHUt4wCW1EqsAyKCv0hDkP6ULkPf8gm3y0Qjrtr0nmeHKOv1k9iJdv76sCS1pZvPgQvw6O3snizags7xPBBVoQ==";
+        private const string EndpointUrl = "https://ddd-loc-euwe-main.documents.azure.com:443/";
+        private const string AuthorizationKey = "ZHUt4wCW1EqsAyKCv0hDkP6ULkPf8gm3y0Qjrtr0nmeHKOv1k9iJdv76sCS1pZvPgQvw6O3snizags7xPBBVoQ==";
 
         public EnvioRepositoryDocDB()
         {
-            using (var client = new DocumentClient(new Uri(endpointUrl), authorizationKey))
+            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
             {
                 Initialize(client).Wait();
             }
@@ -28,9 +28,9 @@ namespace EnvioBoundedContext.Infraestructure.Data
 
         public async Task<Envio> GetByIdAsync(EnvioId id)
         {
-            using (var client = new DocumentClient(new Uri(endpointUrl), authorizationKey))
+            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
             {
-                var documentUri = UriFactory.CreateDocumentUri(databaseName, collectionName, id.Key.ToString());
+                var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
                 DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
 
                 return new Envio(Guid.Parse(response.Document.Id)
@@ -52,7 +52,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
 
         private async Task Initialize(DocumentClient client)
         {
-            await client.CreateDatabaseIfNotExistsAsync(new Database { Id = databaseName });
+            await client.CreateDatabaseIfNotExistsAsync(new Database { Id = DatabaseName });
 
             // We create a partitioned collection here which needs a partition key. Partitioned collections
             // can be created with very high values of provisioned throughput (up to OfferThroughput = 250,000)
@@ -60,7 +60,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
             // single partition collections that store up to 10 GB of data.
             DocumentCollection collectionDefinition = new DocumentCollection
             {
-                Id = collectionName
+                Id = CollectionName
             };
 
             // Use the recommended indexing policy which supports range queries/sorting on strings
@@ -68,7 +68,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
 
             // Create with a throughput of 1000 RU/s
             await client.CreateDocumentCollectionIfNotExistsAsync(
-                UriFactory.CreateDatabaseUri(databaseName),
+                UriFactory.CreateDatabaseUri(DatabaseName),
                 collectionDefinition,
                 new RequestOptions { OfferThroughput = 400 });
         }
