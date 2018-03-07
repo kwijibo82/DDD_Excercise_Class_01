@@ -45,6 +45,11 @@ namespace Common.Domain.Model
             }
         }
 
+        public static bool TryParse(TValue value, out TEnumeration result)
+        {
+            return TryParse(e => e.ValueEquals(value), out result);
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is Enumeration otherValue))
