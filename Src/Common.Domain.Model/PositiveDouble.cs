@@ -36,7 +36,7 @@ namespace Common.Domain.Model
             if (double.IsNegativeInfinity(newValue))
                 throw new NotSupportedException();
 
-            value = newValue < MinValue ? MinValue.value : newValue;
+            value = newValue < 0 ? MinValue.value : newValue;
         }
 
         public static implicit operator double(PositiveDouble d)

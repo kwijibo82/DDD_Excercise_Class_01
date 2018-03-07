@@ -8,6 +8,6 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories
 {
     public interface EnvioRepository : AggregateRootRepository<Envio,EnvioId,Guid>
     {
-        
+        Task GetAll();
     }
 }
