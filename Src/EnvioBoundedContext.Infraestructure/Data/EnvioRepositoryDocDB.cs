@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Common.Domain.Model;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
+using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 
@@ -30,10 +32,12 @@ namespace EnvioBoundedContext.Infraestructure.Data
             {
                 var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
                 DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
-
-                return new Envio(Guid.Parse(response.Document.Id)
-                    , EnvioState.FromValue<EnvioState>(response.Document.EnvioStateKey)
-                    , response.Document.ServicioId
+                Guid envioid = Guid.Parse(response.Document.Id);
+                var state = Enumeration.FromValue<EnvioState>(response.Document.Estado);
+                ServicioId servicioId = new ServicioId(response.Document.ServicioId);
+                return new Envio(envioid
+                    , state
+                    , servicioId
                     , response.Document.Remitente
                     , response.Document.Destinatario
                     , response.Document.DireccionEntrega
@@ -47,11 +51,11 @@ namespace EnvioBoundedContext.Infraestructure.Data
         {
             using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
             {
-                EnvioDocument envio = new EnvioDocument()
+                EnvioDocument envio = new EnvioDocument
                 {
                     Id = agregateRoot.Id.Key.ToString(),
-                    EnvioStateKey = agregateRoot.EnvioState.Id,
-                    ServicioId = agregateRoot.ServicioId,
+                    Estado = agregateRoot.EnvioState.Id,
+                    ServicioId = agregateRoot.ServicioId.Key,
                     Remitente = agregateRoot.Remitente,
                     Destinatario = agregateRoot.Destinatario,
                     DireccionEntrega = agregateRoot.DireccionEntrega,
@@ -70,7 +74,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
             {
                 foreach (Document document in await client.ReadDocumentFeedAsync(
                     UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName),
-                    new FeedOptions {MaxItemCount = 10}))
+                    new FeedOptions { MaxItemCount = 10 }))
                 {
                     Console.WriteLine(document);
                 }

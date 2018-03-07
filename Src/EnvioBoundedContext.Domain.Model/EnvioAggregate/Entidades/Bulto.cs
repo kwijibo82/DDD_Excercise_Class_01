@@ -1,14 +1,16 @@
-﻿namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
+﻿using Common.Domain.Model.Domain;
+
+namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
-    public class Bulto
+    public class Bulto : ValueObject<Bulto>
     {
-        public Peso Peso { get; private set; }
-        public Dimensiones Dimensiones { get; private set; }
+        public Peso Peso { get; }
+        public Dimensiones Dimensiones { get; }
 
         public Bulto(Peso peso, Dimensiones dimensiones)
         {
-            this.Peso = peso;
-            this.Dimensiones = dimensiones;
+            Peso = peso;
+            Dimensiones = dimensiones;
         }
     }
 }

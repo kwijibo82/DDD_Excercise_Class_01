@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Domain.Model;
+using Newtonsoft.Json;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.VO
 {
@@ -20,6 +21,12 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.VO
 
 
         // 3. Constructor
+        [JsonConstructor]
+        public EnvioPersona(Guid id, string nombre, string apellido1, string apellido2) : this(nombre, apellido1, apellido2)
+        {
+            Id = id;
+        }
+
         public EnvioPersona(string nombre, string apellido1, string apellido2)
         {
             Requires.NotNullOrEmpty(nombre, nameof(nombre));

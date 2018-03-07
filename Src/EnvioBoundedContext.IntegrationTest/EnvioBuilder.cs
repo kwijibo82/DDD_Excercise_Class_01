@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EnvioBoundedContext.Domain.Model;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
@@ -21,8 +18,8 @@ namespace EnvioBoundedContext.IntegrationTest
                 direccionRecogida ?? new Direccion("tipoViaR", "nombreCalleR", "numeroPortalR", "pisoR", "puertaR", "escaleraR", "codigoPostalR", "localidadR", "provinciaR"),
                 bultos ?? new List<Bulto>
                 {
-                    new Bulto(new Peso(UnidadPeso.Kilo, 5), new Dimensiones(1,2,3)),
-                    new Bulto(new Peso(UnidadPeso.Kilo, 6), new Dimensiones(4,5,6))
+                    new Bulto(new Peso(UnidadPeso.Kilo, 5d), new Dimensiones(1d,2d,3d)),
+                    new Bulto(new Peso(UnidadPeso.Kilo, 6d), new Dimensiones(4d,5d,6d))
                 }
                 );
         }

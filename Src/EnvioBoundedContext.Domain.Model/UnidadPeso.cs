@@ -5,7 +5,8 @@ namespace EnvioBoundedContext.Domain.Model
 {
     public class UnidadPeso : Enumeration
     {
-        public UnidadPeso(string clave, string valor) : base(clave, valor)
+
+        public UnidadPeso(string id, string name) : base(id, name)
         {
         }
 

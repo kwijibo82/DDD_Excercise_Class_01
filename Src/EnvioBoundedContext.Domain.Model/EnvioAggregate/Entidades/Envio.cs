@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Domain.Model;
 using Common.Domain.Model.Domain;
 using Common.Domain.Model.EventAggregator;
@@ -27,7 +28,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             Destinatario = destinatario;
             DireccionEntrega = direccionEntrega;
             DireccionRecogida = direccionRecogida;
-            _bultos = new List<Bulto>(bultos);
+            _bultos = new List<Bulto>(bultos ?? Enumerable.Empty<Bulto>());
         }
 
         public Envio(Guid id) : base(new EnvioId(id))
@@ -53,7 +54,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
         }
 
-        public ServicioId ServicioId { get; private set; }
+        public ServicioId ServicioId { get; }
         public EnvioState EnvioState => myState;
         public EnvioPersona Remitente { get; private set; }
         public EnvioPersona Destinatario { get; private set; }
@@ -95,7 +96,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             Destinatario = nuevoDestinatario;
 
             IEventAggregatorReactive eventAggregator = ContainerFactory.Resolve<IEventAggregatorReactive>();
-            eventAggregator.Raise<DestinatarioAsignado>(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, this.Id));
+            eventAggregator.Raise<DestinatarioAsignado>(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, Id));
         }
 
         public void AsignarDireccionEntrega(Direccion nuevaDireccion)

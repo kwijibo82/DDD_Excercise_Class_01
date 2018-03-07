@@ -7,9 +7,9 @@ namespace Common.Domain.Model
 {
     public abstract class Enumeration
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public string Id { get; private set; }
+        public string Id { get; }
 
         protected Enumeration()
         {
