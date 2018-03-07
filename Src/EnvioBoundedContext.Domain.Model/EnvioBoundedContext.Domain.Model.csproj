@@ -120,13 +120,13 @@
     <Analyzer Include="..\packages\xunit.analyzers.0.8.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="EnvioAggregate\Service\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Common.Domain.Model\Common.Domain.Model.csproj">
       <Project>{ad0af3eb-75fa-4145-a656-8cc554093010}</Project>
       <Name>Common.Domain.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EnvioAggregate\Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
