@@ -13,10 +13,22 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
     {
         readonly Stateless.StateMachine<EnvioState, Trigger> _stateMachine;
         private readonly List<Bulto> _bultos;
- 
+
 
 
         private EnvioState myState { get; set; }
+
+        public Envio(Guid id, EnvioState state, ServicioId servicioId, EnvioPersona remitente, EnvioPersona destinatario, Direccion direccionEntrega, Direccion direccionRecogida, IEnumerable<Bulto> bultos) : this(id)
+        {
+            myState = state;
+
+            ServicioId = servicioId;
+            Remitente = remitente;
+            Destinatario = destinatario;
+            DireccionEntrega = direccionEntrega;
+            DireccionRecogida = direccionRecogida;
+            _bultos = new List<Bulto>(bultos);
+        }
 
         public Envio(Guid id) : base(new EnvioId(id))
         {
@@ -38,22 +50,18 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
             _bultos = new List<Bulto>();
 
-            
+
         }
 
         public ServicioId ServicioId { get; private set; }
-
         public EnvioState EnvioState => myState;
-
         public EnvioPersona Remitente { get; private set; }
-
         public EnvioPersona Destinatario { get; private set; }
-
         public Direccion DireccionEntrega { get; private set; }
-
         public Direccion DireccionRecogida { get; private set; }
-
         public IEnumerable<Bulto> Bultos => _bultos;
+
+
 
         public void AsignarRemitente(EnvioPersona nuevoRemitente)
         {

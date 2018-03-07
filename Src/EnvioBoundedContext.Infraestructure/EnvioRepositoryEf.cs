@@ -2,22 +2,20 @@
 using System.Threading.Tasks;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 
 namespace EnvioBoundedContext.Infraestructure
 {
     public class EnvioRepositoryEf : EnvioRepository
     {
-
-        public Task<Envio> GetEnvioBy(Guid envioId)
+        public Task<Envio> GetByIdAsync(EnvioId id)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(Envio envio)
+        public Task SaveAsync(Envio entity)
         {
-            //envio.getSnapShot();
-            string id = $"envio.Id.Key";
-
+            throw new NotImplementedException();
         }
     }
 
