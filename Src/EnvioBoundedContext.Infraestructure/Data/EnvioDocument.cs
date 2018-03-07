@@ -32,7 +32,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
             {
                 var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
                 DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
-
+             
                 return new Envio(Guid.Parse(response.Document.Id)
                     , response.Document.EnvioState
                     , response.Document.ServicioId
@@ -45,9 +45,25 @@ namespace EnvioBoundedContext.Infraestructure.Data
 
         }
 
-        public Task SaveAsync(Envio entity)
+        public async Task SaveAsync(Envio agregateRoot)
         {
-            throw new NotImplementedException();
+            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
+            {
+                EnvioDocument envio = new EnvioDocument()
+                {
+                    Id = agregateRoot.Id.Key.ToString(),
+                    EnvioStateKey = agregateRoot.EnvioState.Id,
+                    ServicioId = agregateRoot.ServicioId,
+                    Remitente = agregateRoot.Remitente,
+                    Destinatario = agregateRoot.Destinatario,
+                    DireccionEntrega = agregateRoot.DireccionEntrega,
+                    DireccionRecogida = agregateRoot.DireccionRecogida,
+                    Bultos = agregateRoot.Bultos
+                };
+
+                Uri collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName);
+                var response = await client.UpsertDocumentAsync(collectionUri, envio);
+            }
         }
 
         private async Task Initialize(DocumentClient client)
@@ -76,12 +92,17 @@ namespace EnvioBoundedContext.Infraestructure.Data
 
     public class EnvioDocument : Resource
     {
-        public EnvioState EnvioState { get; set; }
+        public string EnvioStateKey { get; set; }
         public ServicioId ServicioId { get; set; }
         public EnvioPersona Remitente { get; set; }
         public EnvioPersona Destinatario { get; set; }
         public Direccion DireccionEntrega { get; set; }
         public Direccion DireccionRecogida { get; set; }
         public IEnumerable<Bulto> Bultos { get; set; }
+
+        internal EnvioDocument()
+        {
+            
+        }
     }
 }
