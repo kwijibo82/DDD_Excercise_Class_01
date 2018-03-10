@@ -6,6 +6,7 @@ using Common.Domain.Model.Domain;
 using Common.Domain.Model.EventAggregator;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
+using EnvioBoundedContext.Domain.Model.ServicioAggregate;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
@@ -19,11 +20,15 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
         private EnvioState myState { get; set; }
 
-        public Envio(Guid id, EnvioState state, ServicioId servicioId, EnvioPersona remitente, EnvioPersona destinatario, Direccion direccionEntrega, Direccion direccionRecogida, IEnumerable<Bulto> bultos) : this(id)
+        public Envio(Guid id, string stateKey, Guid? servicioId, EnvioPersona remitente, EnvioPersona destinatario, Direccion direccionEntrega, Direccion direccionRecogida, IEnumerable<Bulto> bultos) : this(id)
         {
-            myState = state;
+            myState = stateKey == null ? EnvioState.Creado : Enumeration.FromValue<EnvioState>(stateKey);
 
-            ServicioId = servicioId;
+            if (servicioId.HasValue)
+            {
+                this.ServicioId = new ServicioId(servicioId.Value);
+            }
+
             Remitente = remitente;
             Destinatario = destinatario;
             DireccionEntrega = direccionEntrega;
@@ -140,5 +145,36 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
         private bool IsInProgress => EnvioState.IsEnvioInProgress(_stateMachine.State);
 
 
+        public void AgregarBultos(Politica politicaServicio, Bulto bulto)
+        {
+            if (!IsInProgress)
+            {
+                return;
+            }
+
+            Peso pesoTotal = new Peso(UnidadPeso.Gramo, 0d);
+            foreach (var item in _bultos)
+            {
+                pesoTotal = pesoTotal + item.Peso.CambiarAGramos();
+            }
+
+            pesoTotal = pesoTotal + bulto.Peso.CambiarAGramos();
+
+            if (!politicaServicio.EsPesoValido(pesoTotal))
+            {
+                throw new ArgumentException("Invalid by policy");
+            }
+
+            _bultos.Add(bulto);
+        }
+
+        public void QuitarBulto(Bulto bulto)
+        {
+            int position = _bultos.IndexOf(bulto);
+            if (position >= 0)
+            {
+                _bultos.RemoveAt(position);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Common.Domain.Model;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
@@ -30,21 +31,36 @@ namespace EnvioBoundedContext.Infraestructure.Data
         {
             using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
             {
-                var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
-                DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
-                Guid envioid = Guid.Parse(response.Document.Id);
-                var state = Enumeration.FromValue<EnvioState>(response.Document.Estado);
-                ServicioId servicioId = new ServicioId(response.Document.ServicioId);
-                return new Envio(envioid
-                    , state
-                    , servicioId
-                    , response.Document.Remitente
-                    , response.Document.Destinatario
-                    , response.Document.DireccionEntrega
-                    , response.Document.DireccionRecogida
-                    , response.Document.Bultos);
-            }
+                try
+                {
+                    var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
+                    DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
+                    Guid envioid = Guid.Parse(response.Document.Id);
 
+                    return new Envio(envioid
+                        , response.Document.Estado
+                        , response.Document.ServicioId
+                        , response.Document.Remitente
+                        , response.Document.Destinatario
+                        , response.Document.DireccionEntrega
+                        , response.Document.DireccionRecogida
+                        , response.Document.Bultos);
+                }
+                catch (DocumentClientException documentClientException)
+                {
+                    if (documentClientException.StatusCode.HasValue &&
+                        documentClientException.StatusCode.Value == HttpStatusCode.NotFound)
+                    {
+                        return null;
+                    }
+                    if (documentClientException.StatusCode.HasValue &&
+                        (int)documentClientException.StatusCode.Value == 429)
+                    {
+                        throw new ArgumentException("Busca un envio, pero hay mas de uno.");
+                    }
+                    throw;
+                }
+            }
         }
 
         public async Task SaveAsync(Envio agregateRoot)
@@ -55,7 +71,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
                 {
                     Id = agregateRoot.Id.Key.ToString(),
                     Estado = agregateRoot.EnvioState.Id,
-                    ServicioId = agregateRoot.ServicioId.Key,
+                    ServicioId = agregateRoot.ServicioId?.Key,
                     Remitente = agregateRoot.Remitente,
                     Destinatario = agregateRoot.Destinatario,
                     DireccionEntrega = agregateRoot.DireccionEntrega,

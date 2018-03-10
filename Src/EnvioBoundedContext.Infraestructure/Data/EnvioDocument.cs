@@ -9,7 +9,7 @@ namespace EnvioBoundedContext.Infraestructure.Data
     public class EnvioDocument : Resource
     {
         public string Estado { get; set; }
-        public Guid ServicioId { get; set; }
+        public Guid? ServicioId { get; set; }
         public EnvioPersona Remitente { get; set; }
         public EnvioPersona Destinatario { get; set; }
         public Direccion DireccionEntrega { get; set; }
