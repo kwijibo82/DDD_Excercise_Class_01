@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using EnvioBoundedContext.Domain.Model;
@@ -8,13 +7,13 @@ using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate;
-using EnvioBoundedContext.Infraestructure.Data;
+using EnvioBoundedContext.Infraestructure.Data.DocDb;
 using Xunit;
 using Xunit2.Should;
 
 namespace EnvioBoundedContext.IntegrationTest
 {
-    public class EnvioRepositoryTest
+    public class EnvioRepositoryDocDbTest
     {
         [Fact]
         public async Task GuardarEnvioAsync()

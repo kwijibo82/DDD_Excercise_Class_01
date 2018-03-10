@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
-using System.Collections.Generic;
 using Microsoft.Azure.Documents;
 
-namespace EnvioBoundedContext.Infraestructure.Data
+namespace EnvioBoundedContext.Infraestructure.Data.DocDb
 {
     public class EnvioDocument : Resource
     {

@@ -11,25 +11,6 @@ namespace EnvioBoundedContext.IntegrationTest
 {
     public static class EnvioBuilder
     {
-        //public static Envio GetEnvio(Guid id, string stateKey = null, ServicioId servicioId = null,
-        //    EnvioPersona remitente = null, EnvioPersona destinatario = null, Direccion direccionEntrega = null,
-        //    Direccion direccionRecogida = null, IEnumerable<Bulto> bultos = null)
-        //{
-        //    return new Envio(id, stateKey, servicioId ?? new ServicioId(Guid.NewGuid()),
-        //        remitente ?? new EnvioPersona("nombreRemitente", "apellido1Remitente", "apellido2Remitente"),
-        //        destinatario ?? new EnvioPersona("nombreDestinario", "apellido1Destinario", "apellido2Destinario"),
-        //        direccionEntrega ?? new Direccion("tipoViaE", "nombreCalleE", "numeroPortalE", "pisoE", "puertaE",
-        //            "escaleraE", "codigoPostalE", "localidadE", "provinciaE"),
-        //        direccionRecogida ?? new Direccion("tipoViaR", "nombreCalleR", "numeroPortalR", "pisoR", "puertaR",
-        //            "escaleraR", "codigoPostalR", "localidadR", "provinciaR"),
-        //        bultos ?? new List<Bulto>
-        //        {
-        //            new Bulto(new Peso(UnidadPeso.Kilo, 5d), new Dimensiones(1d, 2d, 3d)),
-        //            new Bulto(new Peso(UnidadPeso.Kilo, 6d), new Dimensiones(4d, 5d, 6d))
-        //        }
-        //    );
-        //}
-
         public static Envio BuildEnvio(Guid id, string stateKey = null, Guid? servicioId = null,
             EnvioPersona remitente = null, EnvioPersona destinatario = null, Direccion direccionEntrega = null,
             Direccion direccionRecogida = null, IEnumerable<Bulto> bultos = null)

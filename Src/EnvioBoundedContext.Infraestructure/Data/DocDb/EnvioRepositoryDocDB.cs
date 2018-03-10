@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using Common.Domain.Model;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
-using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 
-namespace EnvioBoundedContext.Infraestructure.Data
+namespace EnvioBoundedContext.Infraestructure.Data.DocDb
 {
     public class EnvioRepositoryDocDB : EnvioRepository
     {
