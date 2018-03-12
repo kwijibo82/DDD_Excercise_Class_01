@@ -56,7 +56,6 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
             _bultos = new List<Bulto>();
 
-
         }
 
         public ServicioId ServicioId { get; }
