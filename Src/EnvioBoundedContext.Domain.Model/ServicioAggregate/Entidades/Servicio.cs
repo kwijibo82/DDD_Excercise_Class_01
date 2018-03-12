@@ -13,8 +13,8 @@ namespace EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades
 
         public ServicioId Id { get; set; }
         // Tanto las entidades como los VO tienen propiedades readonly
-        public Guid PoliticaId { get; private set; }
-        public string TiempoEstimadoEntrega { get; private set; }
-        public string Nombre { get; private set; }
+        public Guid PoliticaId { get; }
+        public string TiempoEstimadoEntrega { get; }
+        public string Nombre { get; }
     }
 }

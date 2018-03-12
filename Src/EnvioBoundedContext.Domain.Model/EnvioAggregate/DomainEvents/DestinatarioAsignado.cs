@@ -6,7 +6,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents
 {
     public class DestinatarioAsignado : DomainEvent
     {
-        public Guid Id { get; }
+        public Guid DestinatarioId { get; }
 
         public string Nombre { get; }
 
@@ -21,7 +21,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents
 
         public DestinatarioAsignado(Guid uId, string nombre, string apellido1, string apellido2, EnvioId envioId)
         {
-            Id = uId;
+            DestinatarioId = uId;
             Nombre = nombre;
             Apellido1 = apellido1;
             Apellido2 = apellido2;

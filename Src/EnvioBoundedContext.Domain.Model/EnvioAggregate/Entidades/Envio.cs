@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Domain.Model;
 using Common.Domain.Model.Domain;
 using Common.Domain.Model.EventAggregator;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
+using EnvioBoundedContext.Domain.Model.ServicioAggregate;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
@@ -13,10 +15,26 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
     {
         readonly Stateless.StateMachine<EnvioState, Trigger> _stateMachine;
         private readonly List<Bulto> _bultos;
- 
+
 
 
         private EnvioState myState { get; set; }
+
+        public Envio(Guid id, string stateKey, Guid? servicioId, EnvioPersona remitente, EnvioPersona destinatario, Direccion direccionEntrega, Direccion direccionRecogida, IEnumerable<Bulto> bultos) : this(id)
+        {
+            myState = stateKey == null ? EnvioState.Creado : Enumeration.FromValue<EnvioState>(stateKey);
+
+            if (servicioId.HasValue)
+            {
+                this.ServicioId = new ServicioId(servicioId.Value);
+            }
+
+            Remitente = remitente;
+            Destinatario = destinatario;
+            DireccionEntrega = direccionEntrega;
+            DireccionRecogida = direccionRecogida;
+            _bultos = new List<Bulto>(bultos ?? Enumerable.Empty<Bulto>());
+        }
 
         public Envio(Guid id) : base(new EnvioId(id))
         {
@@ -38,22 +56,17 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
             _bultos = new List<Bulto>();
 
-            
         }
 
-        public ServicioId ServicioId { get; private set; }
-
+        public ServicioId ServicioId { get; }
         public EnvioState EnvioState => myState;
-
         public EnvioPersona Remitente { get; private set; }
-
         public EnvioPersona Destinatario { get; private set; }
-
         public Direccion DireccionEntrega { get; private set; }
-
         public Direccion DireccionRecogida { get; private set; }
-
         public IEnumerable<Bulto> Bultos => _bultos;
+
+
 
         public void AsignarRemitente(EnvioPersona nuevoRemitente)
         {
@@ -87,7 +100,7 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
             Destinatario = nuevoDestinatario;
 
             IEventAggregatorReactive eventAggregator = ContainerFactory.Resolve<IEventAggregatorReactive>();
-            eventAggregator.Raise<DestinatarioAsignado>(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, this.Id));
+            eventAggregator.Raise<DestinatarioAsignado>(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, Id));
         }
 
         public void AsignarDireccionEntrega(Direccion nuevaDireccion)
@@ -131,5 +144,36 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
         private bool IsInProgress => EnvioState.IsEnvioInProgress(_stateMachine.State);
 
 
+        public void AgregarBultos(Politica politicaServicio, Bulto bulto)
+        {
+            if (!IsInProgress)
+            {
+                return;
+            }
+
+            Peso pesoTotal = new Peso(UnidadPeso.Gramo, 0d);
+            foreach (var item in _bultos)
+            {
+                pesoTotal = pesoTotal + item.Peso.CambiarAGramos();
+            }
+
+            pesoTotal = pesoTotal + bulto.Peso.CambiarAGramos();
+
+            if (!politicaServicio.EsPesoValido(pesoTotal))
+            {
+                throw new ArgumentException("Invalid by policy");
+            }
+
+            _bultos.Add(bulto);
+        }
+
+        public void QuitarBulto(Bulto bulto)
+        {
+            int position = _bultos.IndexOf(bulto);
+            if (position >= 0)
+            {
+                _bultos.RemoveAt(position);
+            }
+        }
     }
 }

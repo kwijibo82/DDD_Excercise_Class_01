@@ -1,11 +1,13 @@
 ﻿using Common.Domain.Model;
+using Newtonsoft.Json;
 
 
 namespace EnvioBoundedContext.Domain.Model
 {
     public class UnidadPeso : Enumeration
     {
-        public UnidadPeso(string clave, string valor) : base(clave, valor)
+        [JsonConstructor]
+        public UnidadPeso(string id, string name) : base(id, name)
         {
         }
 
@@ -13,5 +15,9 @@ namespace EnvioBoundedContext.Domain.Model
 
         public static UnidadPeso Gramo = new UnidadPeso("GR", "Gramos");
 
+        public UnidadPeso()
+        {
+
+        }
     }
 }

@@ -29,19 +29,19 @@ namespace Common.Domain.Model
         /// </summary>
         public static PositiveDouble PositiveInfinity = double.PositiveInfinity;
 
-        double value;
+        public double Value { get; }
 
-        public PositiveDouble(double newValue)
+        public PositiveDouble(double value)
         {
-            if (double.IsNegativeInfinity(newValue))
+            if (double.IsNegativeInfinity(value))
                 throw new NotSupportedException();
 
-            value = newValue < MinValue ? MinValue.value : newValue;
+            Value = value < 0d ? 0d : value;
         }
 
         public static implicit operator double(PositiveDouble d)
         {
-            return d.value;
+            return d.Value;
         }
 
         public static implicit operator PositiveDouble(double d)
@@ -51,32 +51,32 @@ namespace Common.Domain.Model
 
         public static bool operator <(PositiveDouble a, PositiveDouble b)
         {
-            return a.value < b.value;
+            return a.Value < b.Value;
         }
 
         public static bool operator >(PositiveDouble a, PositiveDouble b)
         {
-            return a.value > b.value;
+            return a.Value > b.Value;
         }
 
         public static bool operator ==(PositiveDouble a, PositiveDouble b)
         {
-            return a.value == b.value;
+            return a.Value == b.Value;
         }
 
         public static bool operator !=(PositiveDouble a, PositiveDouble b)
         {
-            return a.value != b.value;
+            return a.Value != b.Value;
         }
 
         public static bool operator <=(PositiveDouble a, PositiveDouble b)
         {
-            return a.value <= b.value;
+            return a.Value <= b.Value;
         }
 
         public static bool operator >=(PositiveDouble a, PositiveDouble b)
         {
-            return a.value >= b.value;
+            return a.Value >= b.Value;
         }
 
         public override bool Equals(object a)
@@ -86,12 +86,12 @@ namespace Common.Domain.Model
 
         public override int GetHashCode()
         {
-            return value.GetHashCode();
+            return Value.GetHashCode();
         }
 
         public override string ToString()
         {
-            return value.ToString();
+            return Value.ToString();
         }
     }
 }

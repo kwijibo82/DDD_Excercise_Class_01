@@ -7,9 +7,9 @@ namespace Common.Domain.Model
 {
     public abstract class Enumeration
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public string Id { get; private set; }
+        public string Id { get; }
 
         protected Enumeration()
         {
@@ -63,6 +63,14 @@ namespace Common.Domain.Model
             return Id.GetHashCode();
         }
 
+
+
+        public static T FromValue<T>(string value) where T : Enumeration, new()
+        {
+            var matchingItem = Parse<T, string>(value, "value", item => item.Id == value);
+            return matchingItem;
+        }
+
         public static T FromDisplayName<T>(string displayName) where T : Enumeration, new()
         {
             var matchingItem = Parse<T, string>(displayName, "display name", item => item.Name == displayName);
@@ -74,13 +82,11 @@ namespace Common.Domain.Model
             var matchingItem = GetAll<T>().FirstOrDefault(predicate);
 
             if (matchingItem == null)
-            {
-                var message = string.Format("'{0}' is not a valid {1} in {2}", value, description, typeof(T));
-
-                throw new InvalidOperationException(message);
-            }
+                throw new InvalidOperationException($"'{value}' is not a valid {description} in {typeof(T)}");
 
             return matchingItem;
         }
+
+        public int CompareTo(object other) => Id.CompareTo(((Enumeration)other).Id);
     }
 }

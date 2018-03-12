@@ -1,21 +1,25 @@
 ﻿using Common.Domain.Model;
 using Common.Domain.Model.Domain;
-using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
+using Newtonsoft.Json;
 
 namespace EnvioBoundedContext.Domain.Model
 {
-    public class Dimensiones : ValueObject<Direccion>
+    public class Dimensiones : ValueObject<Dimensiones>
     {
-        // TODO: constructor con validaciones
-        public PositiveDouble Alto { get; private set; }
-        public PositiveDouble Ancho { get; private set; }
-        public PositiveDouble Largo { get; private set; }
+        public PositiveDouble Alto { get; }
+        public PositiveDouble Ancho { get; }
+        public PositiveDouble Largo { get; }
 
-        public Dimensiones(double alto, double ancho, double largo)
+        [JsonConstructor]
+        public Dimensiones(PositiveDouble alto, PositiveDouble ancho, PositiveDouble largo)
         {
-            this.Alto = new PositiveDouble(alto);
-            this.Ancho = new PositiveDouble(ancho);
-            this.Largo = new PositiveDouble(largo);
+            Alto = new PositiveDouble(alto);
+            Ancho = new PositiveDouble(ancho);
+            Largo = new PositiveDouble(largo);
+        }
+
+        public Dimensiones(double alto, double ancho, double largo) : this(new PositiveDouble(alto), new PositiveDouble(ancho), new PositiveDouble(largo))
+        {
         }
     }
 

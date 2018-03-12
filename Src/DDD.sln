@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reviews", "Reviews", "{0D26
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Domain.Model", "Common.Domain.Model\Common.Domain.Model.csproj", "{AD0AF3EB-75FA-4145-A656-8CC554093010}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvioBoundedContext.IntegrationTest", "EnvioBoundedContext.IntegrationTest\EnvioBoundedContext.IntegrationTest.csproj", "{8C04DEA5-5A2C-4B0D-87CB-83A34BD162A2}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvioBoundedContext.Application", "EnvioBoundedContext.Application\EnvioBoundedContext.Application.csproj", "{E44D7A00-D864-4FC1-8EEE-4FE57C8DEE79}"
 EndProject
 Global
@@ -42,6 +44,10 @@ Global
 		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD0AF3EB-75FA-4145-A656-8CC554093010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C04DEA5-5A2C-4B0D-87CB-83A34BD162A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C04DEA5-5A2C-4B0D-87CB-83A34BD162A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C04DEA5-5A2C-4B0D-87CB-83A34BD162A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C04DEA5-5A2C-4B0D-87CB-83A34BD162A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E44D7A00-D864-4FC1-8EEE-4FE57C8DEE79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E44D7A00-D864-4FC1-8EEE-4FE57C8DEE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E44D7A00-D864-4FC1-8EEE-4FE57C8DEE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,6 +58,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4F4949C7-17A4-43BA-A2EA-C920C05E265D} = {7D9C6EFD-44CF-4A0E-9279-6B55EBF6372E}
+		{8C04DEA5-5A2C-4B0D-87CB-83A34BD162A2} = {7D9C6EFD-44CF-4A0E-9279-6B55EBF6372E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A377733A-076A-49C8-915B-88FEB6113410}
