@@ -2,6 +2,9 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Domain.Model;
+using Common.Domain.Model.EventAggregator;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using EnvioBoundedContext.Infraestructure.Data.EF;
@@ -109,6 +112,81 @@ namespace EnvioBoundedContext.IntegrationTest
                 envioRead.ServicioId.ShouldNotBeNull();
                 envioRead.Bultos.Count().ShouldBe(1);
             }
+        }
+
+        [Fact]
+        public async Task GuardarEnvioDatosMinimosAsync()
+        {
+            Guid idGuid = Guid.NewGuid();
+            Envio envio = EnvioBuilder.BuildEnvio(idGuid);
+            int counter;
+            using (var uow = new EnvioUnitOfWorkDefault())
+            {
+                await uow.EnvioRepository.SaveAsync(envio);
+                counter = uow.Commit();
+            }
+            counter.ShouldBeGreaterThan(0);
+
+            Envio envioRead;
+            using (var uow = new EnvioUnitOfWorkDefault())
+            {
+                envioRead = await uow.EnvioRepository.GetByIdAsync(new EnvioId(idGuid));
+            }
+
+            envioRead.Id.ShouldBe(envio.Id);
+            envioRead.EnvioState.ShouldBe(EnvioState.Creado);
+            envioRead.ServicioId.ShouldBeNull();
+            envioRead.Destinatario.ShouldBeNull();
+            envioRead.Remitente.ShouldBeNull();
+            envioRead.DireccionEntrega.ShouldBeNull();
+            envioRead.DireccionRecogida.ShouldBeNull();
+            envioRead.Bultos.Count().ShouldBe(0);
+        }
+
+
+        [Fact]
+        public async Task GuardarEnvioDestinatarioDesdeMinimoAsync()
+        {
+            ContainerFactory.EnsureContainer();
+            ContainerFactory.RegisterAsSingleton<IEventAggregatorReactive, EventAggregatorReactive>();
+            IEventAggregatorReactive domainDispacher = ContainerFactory.Resolve<IEventAggregatorReactive>();
+            Guid idGuid = Guid.NewGuid();
+            Envio envio = EnvioBuilder.BuildEnvio(idGuid);
+            int counter;
+            using (var uow = new EnvioUnitOfWorkDefault())
+            {
+                await uow.EnvioRepository.SaveAsync(envio);
+                counter = uow.Commit();
+            }
+            counter.ShouldBeGreaterThan(0);
+
+            Envio envioRead;
+            EnvioPersona destinatario = new EnvioPersona("Jose", "Zuzana", "Raul");
+            using (var uow = new EnvioUnitOfWorkDefault())
+            {
+                envioRead = await uow.EnvioRepository.GetByIdAsync(new EnvioId(idGuid));
+                using (domainDispacher.GetEvent<DestinatarioAsignado>().Subscribe(c => EventoDestinatarioAsignadoSpy(c)))
+                {
+                    envioRead.AsignarDestinatario(destinatario);
+                    uow.EnvioRepository.ActualizarDestinatarioEnEnvioexistente(envioRead);
+                    counter = uow.Commit();
+                }
+            }
+
+            envioRead.Id.ShouldBe(envio.Id);
+            envioRead.EnvioState.ShouldBe(EnvioState.Creado);
+            envioRead.ServicioId.ShouldBeNull();
+            envioRead.Destinatario.ShouldBe(destinatario);
+            envioRead.Remitente.ShouldBeNull();
+            envioRead.DireccionEntrega.ShouldBeNull();
+            envioRead.DireccionRecogida.ShouldBeNull();
+            envioRead.Bultos.Count().ShouldBe(0);
+        }
+
+
+        void EventoDestinatarioAsignadoSpy(DestinatarioAsignado dest)
+        {
+            //TO DO
         }
     }
 }

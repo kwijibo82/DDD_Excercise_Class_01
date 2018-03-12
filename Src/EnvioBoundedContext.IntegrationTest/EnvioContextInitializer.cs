@@ -7,7 +7,7 @@ using EnvioBoundedContext.Infraestructure.Data.EF;
 
 namespace EnvioBoundedContext.IntegrationTest
 {
-    public class EnvioContextInitializer : DropCreateDatabaseAlways<EnvioContext>
+    public class EnvioContextInitializer : DropCreateDatabaseIfModelChanges<EnvioContext>
     {
         protected override void Seed(EnvioContext context)
         {

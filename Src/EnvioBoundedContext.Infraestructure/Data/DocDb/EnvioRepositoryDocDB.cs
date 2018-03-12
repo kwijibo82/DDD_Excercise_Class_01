@@ -116,5 +116,10 @@ namespace EnvioBoundedContext.Infraestructure.Data.DocDb
                 collectionDefinition,
                 new RequestOptions { OfferThroughput = 400 });
         }
+
+        public void ActualizarDestinatarioEnEnvioexistente(Envio envio)
+        {
+            //TO DO: para Jose
+        }
     }
 }

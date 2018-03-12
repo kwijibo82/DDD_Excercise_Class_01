@@ -67,7 +67,95 @@ namespace EnvioBoundedContext.Infraestructure.Data.EF
         // string tipoVia, string nombreCalle, string numeroPortal, string piso, string puerta, string escalera, string codigoPostal, string localidad, string provincia
         public Task SaveAsync(Envio entity)
         {
+            EnvioSnapShot envioSnapShot = CrearEnvioSnapShot(entity);
+
+            _context.Envios.Add(envioSnapShot);
+
             return Task.CompletedTask;
+        }
+
+        private static EnvioSnapShot CrearEnvioSnapShot(Envio entity)
+        {
+            return new EnvioSnapShot
+            {
+                EnvioSnapShotId = entity.Id.Key,
+                EnvioState = entity.EnvioState.Id,
+                ServicioId = entity.ServicioId?.Key,
+                Remitente = entity.Remitente == null ? null : new EnvioPersonaSnapShot
+                {
+                    EnvioPersonaSnapShotId = entity.Remitente.Id,
+                    Nombre = entity.Remitente.Nombre,
+                    Apellido1 = entity.Remitente.Apellido1,
+                    Apellido2 = entity.Remitente.Apellido2
+                },
+                Destinatario = entity.Destinatario == null ? null : new EnvioPersonaSnapShot
+                {
+                    EnvioPersonaSnapShotId = entity.Destinatario.Id,
+                    Nombre = entity.Destinatario.Nombre,
+                    Apellido1 = entity.Destinatario.Apellido1,
+                    Apellido2 = entity.Destinatario.Apellido2
+                },
+                DireccionEntrega = entity.DireccionEntrega == null ? null : new DireccionSnapShot
+                {
+                    TipoVia = entity.DireccionEntrega.TipoVia
+                                ,
+                    NombreCalle = entity.DireccionEntrega.NombreCalle
+                                ,
+                    NumeroPortal = entity.DireccionEntrega.NumeroPortal
+                                ,
+                    Piso = entity.DireccionEntrega.Piso
+                                ,
+                    Puerta = entity.DireccionEntrega.Puerta
+                                ,
+                    Escalera = entity.DireccionEntrega.Escalera
+                                ,
+                    CodigoPostal = entity.DireccionEntrega.CodigoPostal
+                                ,
+                    Localidad = entity.DireccionEntrega.Localidad
+                                ,
+                    Provincia = entity.DireccionEntrega.Provincia
+                },
+                DireccionRecogida = entity.DireccionRecogida == null ? null : new DireccionSnapShot
+                {
+                    TipoVia = entity.DireccionRecogida.TipoVia
+                                ,
+                    NombreCalle = entity.DireccionRecogida.NombreCalle
+                                ,
+                    NumeroPortal = entity.DireccionRecogida.NumeroPortal
+                                ,
+                    Piso = entity.DireccionRecogida.Piso
+                                ,
+                    Puerta = entity.DireccionRecogida.Puerta
+                                ,
+                    Escalera = entity.DireccionRecogida.Escalera
+                                ,
+                    CodigoPostal = entity.DireccionRecogida.CodigoPostal
+                                ,
+                    Localidad = entity.DireccionRecogida.Localidad
+                                ,
+                    Provincia = entity.DireccionRecogida.Provincia
+                },
+                Bultos = entity.Bultos?.Select(b =>
+                                new BultoSnapShot
+                                {
+                                    BultoSnapShotId = Guid.NewGuid(),
+                                    UnidadPeso = b.Peso.Unidad.ToString(),
+                                    Peso = b.Peso.Valor.Value,
+                                    Alto = b.Dimensiones.Alto.Value,
+                                    Ancho = b.Dimensiones.Ancho.Value,
+                                    Largo = b.Dimensiones.Largo.Value
+                                }).ToList()
+            };
+        }
+
+        public void ActualizarDestinatarioEnEnvioexistente(Envio envio)
+        {
+            EnvioSnapShot envioSnapShot = CrearEnvioSnapShot(envio);
+            envioSnapShot.DestinatarioId = envioSnapShot.Destinatario.EnvioPersonaSnapShotId;
+            
+            _context.Entry(envioSnapShot).State = EntityState.Modified;
+            _context.Entry(envioSnapShot.Destinatario).State = EntityState.Modified;
+            _context.Envios.Attach(envioSnapShot);
         }
 
 
