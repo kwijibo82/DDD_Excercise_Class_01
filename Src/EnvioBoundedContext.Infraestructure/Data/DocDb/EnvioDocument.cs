@@ -6,16 +6,16 @@ using Microsoft.Azure.Documents;
 
 namespace EnvioBoundedContext.Infraestructure.Data.DocDb
 {
-    public class EnvioDocument : Resource
-    {
-        public string Estado { get; set; }
-        public Guid? ServicioId { get; set; }
-        public EnvioPersona Remitente { get; set; }
-        public EnvioPersona Destinatario { get; set; }
-        public Direccion DireccionEntrega { get; set; }
-        public Direccion DireccionRecogida { get; set; }
-        public IEnumerable<Bulto> Bultos { get; set; }
+    //public class EnvioDocument : Resource
+    //{
+    //    public string Estado { get; set; }
+    //    public Guid? ServicioId { get; set; }
+    //    public EnvioPersona Remitente { get; set; }
+    //    public EnvioPersona Destinatario { get; set; }
+    //    public Direccion DireccionEntrega { get; set; }
+    //    public Direccion DireccionRecogida { get; set; }
+    //    public IEnumerable<Bulto> Bultos { get; set; }
 
 
-    }
+    //}
 }

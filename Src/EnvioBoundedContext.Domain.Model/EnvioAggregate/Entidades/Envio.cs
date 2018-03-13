@@ -8,32 +8,23 @@ using EnvioBoundedContext.Domain.Model.EnvioAggregate.DomainEvents;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate;
 using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
+using EnvioBoundedContext.Infraestructure.Data.EF;
 
 namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 {
     public class Envio : AggregateRoot<EnvioId, Guid>
     {
         readonly Stateless.StateMachine<EnvioState, Trigger> _stateMachine;
-        private readonly List<Bulto> _bultos;
 
+
+        private EnvioSnapShot snapShot;
 
 
         private EnvioState myState { get; set; }
 
-        public Envio(Guid id, string stateKey, Guid? servicioId, EnvioPersona remitente, EnvioPersona destinatario, Direccion direccionEntrega, Direccion direccionRecogida, IEnumerable<Bulto> bultos) : this(id)
+        public Envio(EnvioSnapShot snapShot) : this(snapShot.EnvioSnapShotId)
         {
-            myState = stateKey == null ? EnvioState.Creado : Enumeration.FromValue<EnvioState>(stateKey);
-
-            if (servicioId.HasValue)
-            {
-                this.ServicioId = new ServicioId(servicioId.Value);
-            }
-
-            Remitente = remitente;
-            Destinatario = destinatario;
-            DireccionEntrega = direccionEntrega;
-            DireccionRecogida = direccionRecogida;
-            _bultos = new List<Bulto>(bultos ?? Enumerable.Empty<Bulto>());
+            this.snapShot = snapShot;
         }
 
         public Envio(Guid id) : base(new EnvioId(id))
@@ -54,19 +45,13 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
             myState = EnvioState.Creado;
 
-            _bultos = new List<Bulto>();
-
         }
 
-        public ServicioId ServicioId { get; }
-        public EnvioState EnvioState => myState;
-        public EnvioPersona Remitente { get; private set; }
-        public EnvioPersona Destinatario { get; private set; }
-        public Direccion DireccionEntrega { get; private set; }
-        public Direccion DireccionRecogida { get; private set; }
-        public IEnumerable<Bulto> Bultos => _bultos;
-
-
+        public EnvioSnapShot GetSnapShot()
+        {
+            snapShot.EnvioState = myState.Id;
+            return snapShot;
+        }
 
         public void AsignarRemitente(EnvioPersona nuevoRemitente)
         {
@@ -75,12 +60,21 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
                 throw new InvalidOperationException();
             }
 
-            if (Remitente == nuevoRemitente)
+            if (snapShot.Remitente == null)
             {
+                snapShot.Remitente = new EnvioPersonaSnapShot
+                {
+                    EnvioPersonaSnapShotId = Guid.Empty,
+                    Nombre = nuevoRemitente.Nombre,
+                    Apellido1 = nuevoRemitente.Apellido1,
+                    Apellido2 = nuevoRemitente.Apellido2
+                };
                 return;
             }
-
-            Remitente = nuevoRemitente;
+            if (snapShot.Remitente.EnvioPersonaSnapShotId == nuevoRemitente.Id)
+            {
+                snapShot.Remitente.Update(nuevoRemitente);
+            }
 
             //Notificamos
         }
@@ -92,53 +86,78 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
                 throw new InvalidOperationException();
             }
 
-            if (Destinatario == nuevoDestinatario)
+
+            if (snapShot.Destinatario == null)
             {
+                snapShot.Destinatario = new EnvioPersonaSnapShot
+                {
+                    EnvioPersonaSnapShotId = Guid.Empty,
+                    Nombre = nuevoDestinatario.Nombre,
+                    Apellido1 = nuevoDestinatario.Apellido1,
+                    Apellido2 = nuevoDestinatario.Apellido2
+                };
                 return;
             }
 
-            Destinatario = nuevoDestinatario;
+            if (snapShot.Destinatario.EnvioPersonaSnapShotId == nuevoDestinatario.Id)
+            {
+                snapShot.Destinatario.Nombre = nuevoDestinatario.Nombre;
+                snapShot.Destinatario.Apellido1 = nuevoDestinatario.Apellido1;
+                snapShot.Destinatario.Apellido2 = nuevoDestinatario.Apellido2;
+                return;
+            }
 
             IEventAggregatorReactive eventAggregator = ContainerFactory.Resolve<IEventAggregatorReactive>();
-            eventAggregator.Raise<DestinatarioAsignado>(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, Id));
+            eventAggregator.Raise(new DestinatarioDesasignado(snapShot.DestinatarioId.Value, Id));
+
+            snapShot.Destinatario = new EnvioPersonaSnapShot
+            {
+                EnvioPersonaSnapShotId = nuevoDestinatario.Id,
+                Nombre = nuevoDestinatario.Nombre,
+                Apellido1 = nuevoDestinatario.Apellido1,
+                Apellido2 = nuevoDestinatario.Apellido2
+            };
+
+
+            //eventAggregator.Raise(new DestinatarioAsignado(nuevoDestinatario.Id, nuevoDestinatario.Nombre, nuevoDestinatario.Apellido1, nuevoDestinatario.Apellido2, Id));
         }
 
         public void AsignarDireccionEntrega(Direccion nuevaDireccion)
         {
-            if (!IsInProgress)
-            {
-                throw new InvalidOperationException();
-            }
+            //if (!IsInProgress)
+            //{
+            //    throw new InvalidOperationException();
+            //}
 
-            if (DireccionEntrega == nuevaDireccion)
-            {
-                return;
-            }
+            //if (DireccionEntrega == nuevaDireccion)
+            //{
+            //    return;
+            //}
 
-            DireccionEntrega = nuevaDireccion;
+            //DireccionEntrega = nuevaDireccion;
 
-            _stateMachine.Fire(Trigger.AsignarDireccionEntrega);
+            //_stateMachine.Fire(Trigger.AsignarDireccionEntrega);
         }
 
         public void AsignarDireccionRecogida(Direccion nuevaDireccion)
         {
-            if (!IsInProgress)
-            {
-                throw new InvalidOperationException();
-            }
+            //if (!IsInProgress)
+            //{
+            //    throw new InvalidOperationException();
+            //}
 
-            if (DireccionRecogida == nuevaDireccion)
-            {
-                return;
-            }
+            //if (DireccionRecogida == nuevaDireccion)
+            //{
+            //    return;
+            //}
 
-            DireccionRecogida = nuevaDireccion;
-            _stateMachine.Fire(Trigger.AsignarDireccionRecogida);
+            //DireccionRecogida = nuevaDireccion;
+            //_stateMachine.Fire(Trigger.AsignarDireccionRecogida);
 
-            if (_stateMachine.State == EnvioState.DireccionesAsignadas)
-            {
-                //Notificar
-            }
+            //if (_stateMachine.State == EnvioState.DireccionesAsignadas)
+            //{
+            //    //Notificar
+            //}
         }
 
         private bool IsInProgress => EnvioState.IsEnvioInProgress(_stateMachine.State);
@@ -146,34 +165,34 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades
 
         public void AgregarBultos(Politica politicaServicio, Bulto bulto)
         {
-            if (!IsInProgress)
-            {
-                return;
-            }
+            //if (!IsInProgress)
+            //{
+            //    return;
+            //}
 
-            Peso pesoTotal = new Peso(UnidadPeso.Gramo, 0d);
-            foreach (var item in _bultos)
-            {
-                pesoTotal = pesoTotal + item.Peso.CambiarAGramos();
-            }
+            //Peso pesoTotal = new Peso(UnidadPeso.Gramo, 0d);
+            //foreach (var item in _bultos)
+            //{
+            //    pesoTotal = pesoTotal + item.Peso.CambiarAGramos();
+            //}
 
-            pesoTotal = pesoTotal + bulto.Peso.CambiarAGramos();
+            //pesoTotal = pesoTotal + bulto.Peso.CambiarAGramos();
 
-            if (!politicaServicio.EsPesoValido(pesoTotal))
-            {
-                throw new ArgumentException("Invalid by policy");
-            }
+            //if (!politicaServicio.EsPesoValido(pesoTotal))
+            //{
+            //    throw new ArgumentException("Invalid by policy");
+            //}
 
-            _bultos.Add(bulto);
+            //_bultos.Add(bulto);
         }
 
         public void QuitarBulto(Bulto bulto)
         {
-            int position = _bultos.IndexOf(bulto);
-            if (position >= 0)
-            {
-                _bultos.RemoveAt(position);
-            }
+            //int position = _bultos.IndexOf(bulto);
+            //if (position >= 0)
+            //{
+            //    _bultos.RemoveAt(position);
+            //}
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
 
 namespace EnvioBoundedContext.Infraestructure.Data.EF
 {
@@ -13,5 +14,12 @@ namespace EnvioBoundedContext.Infraestructure.Data.EF
         public string Apellido1 { get; set; }
 
         public string Apellido2 { get; set; }
+
+        public void Update(EnvioPersona nuevoRemitente)
+        {
+            Nombre = nuevoRemitente.Nombre;
+            Apellido1 = nuevoRemitente.Apellido1;
+            Apellido2 = nuevoRemitente.Apellido2;
+        }
     }
 }

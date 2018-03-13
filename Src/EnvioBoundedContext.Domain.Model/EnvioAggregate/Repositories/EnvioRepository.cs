@@ -7,6 +7,6 @@ namespace EnvioBoundedContext.Domain.Model.EnvioAggregate.Repositories
 {
     public interface EnvioRepository : AggregateRootRepository<Envio, EnvioId, Guid>
     {
-        void ActualizarDestinatarioEnEnvioexistente(Envio envio);
+        void ActualizarDestinatarioEnEnvioExistente(Envio envio);
     }
 }

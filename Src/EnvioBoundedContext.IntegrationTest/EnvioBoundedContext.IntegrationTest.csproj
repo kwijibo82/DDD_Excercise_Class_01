@@ -100,7 +100,6 @@
   <ItemGroup>
     <Compile Include="EnvioBuilder.cs" />
     <Compile Include="EnvioContextInitializer.cs" />
-    <Compile Include="EnvioRepositoryDocDbTest.cs" />
     <Compile Include="EnvioRepositoryEfTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

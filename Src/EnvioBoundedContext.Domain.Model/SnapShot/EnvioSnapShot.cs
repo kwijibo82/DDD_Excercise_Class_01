@@ -11,16 +11,16 @@ namespace EnvioBoundedContext.Infraestructure.Data.EF
 
         public string EnvioState { get; set; }
 
-        public Guid RemitenteId { get; set; }
+        public Guid? RemitenteId { get; set; }
         public virtual EnvioPersonaSnapShot Remitente { get; set; }
 
-        public Guid DestinatarioId { get; set; }
+        public Guid? DestinatarioId { get; set; }
         public virtual EnvioPersonaSnapShot Destinatario { get; set; }
 
-        public Guid DireccionEntregaId { get; set; }
+        public Guid? DireccionEntregaId { get; set; }
         public virtual DireccionSnapShot DireccionEntrega { get; set; }
 
-        public Guid DireccionRecogidaId { get; set; }
+        public Guid? DireccionRecogidaId { get; set; }
         public virtual DireccionSnapShot DireccionRecogida { get; set; }
 
         public virtual ICollection<BultoSnapShot> Bultos { get; set; }

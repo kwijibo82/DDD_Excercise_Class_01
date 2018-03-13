@@ -9,117 +9,117 @@ using Microsoft.Azure.Documents.Client;
 
 namespace EnvioBoundedContext.Infraestructure.Data.DocDb
 {
-    public class EnvioRepositoryDocDB : EnvioRepository
-    {
-        private const string DatabaseName = "EnviosDB";
-        private const string CollectionName = "Envios";
+    //public class EnvioRepositoryDocDB : EnvioRepository
+    //{
+    //    private const string DatabaseName = "EnviosDB";
+    //    private const string CollectionName = "Envios";
 
-        private const string EndpointUrl = "https://ddd-loc-euwe-main.documents.azure.com:443/";
-        private const string AuthorizationKey = "ZHUt4wCW1EqsAyKCv0hDkP6ULkPf8gm3y0Qjrtr0nmeHKOv1k9iJdv76sCS1pZvPgQvw6O3snizags7xPBBVoQ==";
+    //    private const string EndpointUrl = "https://ddd-loc-euwe-main.documents.azure.com:443/";
+    //    private const string AuthorizationKey = "ZHUt4wCW1EqsAyKCv0hDkP6ULkPf8gm3y0Qjrtr0nmeHKOv1k9iJdv76sCS1pZvPgQvw6O3snizags7xPBBVoQ==";
 
-        public EnvioRepositoryDocDB()
-        {
-            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
-            {
-                Initialize(client).Wait();
-            }
-        }
+    //    public EnvioRepositoryDocDB()
+    //    {
+    //        using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
+    //        {
+    //            Initialize(client).Wait();
+    //        }
+    //    }
 
-        public async Task<Envio> GetByIdAsync(EnvioId id)
-        {
-            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
-            {
-                try
-                {
-                    var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
-                    DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
-                    Guid envioid = Guid.Parse(response.Document.Id);
+    //    public async Task<Envio> GetByIdAsync(EnvioId id)
+    //    {
+    //        using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
+    //        {
+    //            try
+    //            {
+    //                var documentUri = UriFactory.CreateDocumentUri(DatabaseName, CollectionName, id.Key.ToString());
+    //                DocumentResponse<EnvioDocument> response = await client.ReadDocumentAsync<EnvioDocument>(documentUri);
+    //                Guid envioid = Guid.Parse(response.Document.Id);
 
-                    return new Envio(envioid
-                        , response.Document.Estado
-                        , response.Document.ServicioId
-                        , response.Document.Remitente
-                        , response.Document.Destinatario
-                        , response.Document.DireccionEntrega
-                        , response.Document.DireccionRecogida
-                        , response.Document.Bultos);
-                }
-                catch (DocumentClientException documentClientException)
-                {
-                    if (documentClientException.StatusCode.HasValue &&
-                        documentClientException.StatusCode.Value == HttpStatusCode.NotFound)
-                    {
-                        return null;
-                    }
-                    if (documentClientException.StatusCode.HasValue &&
-                        (int)documentClientException.StatusCode.Value == 429)
-                    {
-                        throw new ArgumentException("Busca un envio, pero hay mas de uno.");
-                    }
-                    throw;
-                }
-            }
-        }
+    //                return new Envio(envioid
+    //                    , response.Document.Estado
+    //                    , response.Document.ServicioId
+    //                    , response.Document.Remitente
+    //                    , response.Document.Destinatario
+    //                    , response.Document.DireccionEntrega
+    //                    , response.Document.DireccionRecogida
+    //                    , response.Document.Bultos);
+    //            }
+    //            catch (DocumentClientException documentClientException)
+    //            {
+    //                if (documentClientException.StatusCode.HasValue &&
+    //                    documentClientException.StatusCode.Value == HttpStatusCode.NotFound)
+    //                {
+    //                    return null;
+    //                }
+    //                if (documentClientException.StatusCode.HasValue &&
+    //                    (int)documentClientException.StatusCode.Value == 429)
+    //                {
+    //                    throw new ArgumentException("Busca un envio, pero hay mas de uno.");
+    //                }
+    //                throw;
+    //            }
+    //        }
+    //    }
 
-        public async Task SaveAsync(Envio agregateRoot)
-        {
-            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
-            {
-                EnvioDocument envio = new EnvioDocument
-                {
-                    Id = agregateRoot.Id.Key.ToString(),
-                    Estado = agregateRoot.EnvioState.Id,
-                    ServicioId = agregateRoot.ServicioId?.Key,
-                    Remitente = agregateRoot.Remitente,
-                    Destinatario = agregateRoot.Destinatario,
-                    DireccionEntrega = agregateRoot.DireccionEntrega,
-                    DireccionRecogida = agregateRoot.DireccionRecogida,
-                    Bultos = agregateRoot.Bultos
-                };
+    //    public async Task SaveAsync(Envio agregateRoot)
+    //    {
+    //        using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
+    //        {
+    //            EnvioDocument envio = new EnvioDocument
+    //            {
+    //                Id = agregateRoot.Id.Key.ToString(),
+    //                Estado = agregateRoot.EnvioState.Id,
+    //                ServicioId = agregateRoot.ServicioId?.Key,
+    //                Remitente = agregateRoot.Remitente,
+    //                Destinatario = agregateRoot.Destinatario,
+    //                DireccionEntrega = agregateRoot.DireccionEntrega,
+    //                DireccionRecogida = agregateRoot.DireccionRecogida,
+    //                Bultos = agregateRoot.Bultos
+    //            };
 
-                Uri collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName);
-                var response = await client.UpsertDocumentAsync(collectionUri, envio);
-            }
-        }
+    //            Uri collectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName);
+    //            var response = await client.UpsertDocumentAsync(collectionUri, envio);
+    //        }
+    //    }
 
-        public async Task GetAll()
-        {
-            using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
-            {
-                foreach (Document document in await client.ReadDocumentFeedAsync(
-                    UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName),
-                    new FeedOptions { MaxItemCount = 10 }))
-                {
-                    Console.WriteLine(document);
-                }
-            }
-        }
-        private async Task Initialize(DocumentClient client)
-        {
-            await client.CreateDatabaseIfNotExistsAsync(new Database { Id = DatabaseName });
+    //    public async Task GetAll()
+    //    {
+    //        using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey))
+    //        {
+    //            foreach (Document document in await client.ReadDocumentFeedAsync(
+    //                UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName),
+    //                new FeedOptions { MaxItemCount = 10 }))
+    //            {
+    //                Console.WriteLine(document);
+    //            }
+    //        }
+    //    }
+    //    private async Task Initialize(DocumentClient client)
+    //    {
+    //        await client.CreateDatabaseIfNotExistsAsync(new Database { Id = DatabaseName });
 
-            // We create a partitioned collection here which needs a partition key. Partitioned collections
-            // can be created with very high values of provisioned throughput (up to OfferThroughput = 250,000)
-            // and used to store up to 250 GB of data. You can also skip specifying a partition key to create
-            // single partition collections that store up to 10 GB of data.
-            DocumentCollection collectionDefinition = new DocumentCollection
-            {
-                Id = CollectionName
-            };
+    //        // We create a partitioned collection here which needs a partition key. Partitioned collections
+    //        // can be created with very high values of provisioned throughput (up to OfferThroughput = 250,000)
+    //        // and used to store up to 250 GB of data. You can also skip specifying a partition key to create
+    //        // single partition collections that store up to 10 GB of data.
+    //        DocumentCollection collectionDefinition = new DocumentCollection
+    //        {
+    //            Id = CollectionName
+    //        };
 
-            // Use the recommended indexing policy which supports range queries/sorting on strings
-            collectionDefinition.IndexingPolicy = new IndexingPolicy(new RangeIndex(DataType.String) { Precision = -1 });
+    //        // Use the recommended indexing policy which supports range queries/sorting on strings
+    //        collectionDefinition.IndexingPolicy = new IndexingPolicy(new RangeIndex(DataType.String) { Precision = -1 });
 
-            // Create with a throughput of 1000 RU/s
-            await client.CreateDocumentCollectionIfNotExistsAsync(
-                UriFactory.CreateDatabaseUri(DatabaseName),
-                collectionDefinition,
-                new RequestOptions { OfferThroughput = 400 });
-        }
+    //        // Create with a throughput of 1000 RU/s
+    //        await client.CreateDocumentCollectionIfNotExistsAsync(
+    //            UriFactory.CreateDatabaseUri(DatabaseName),
+    //            collectionDefinition,
+    //            new RequestOptions { OfferThroughput = 400 });
+    //    }
 
-        public void ActualizarDestinatarioEnEnvioexistente(Envio envio)
-        {
-            //TO DO: para Jose
-        }
-    }
+    //    public void ActualizarDestinatarioEnEnvioExistente(Envio envio)
+    //    {
+    //        //TO DO: para Jose
+    //    }
+    //}
 }

@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Common.Domain.Model;
 using EnvioBoundedContext.Domain.Model;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.Entidades;
 using EnvioBoundedContext.Domain.Model.EnvioAggregate.VO;
-using EnvioBoundedContext.Domain.Model.ServicioAggregate.Entidades;
+using EnvioBoundedContext.Infraestructure.Data.EF;
 
 namespace EnvioBoundedContext.IntegrationTest
 {
     public static class EnvioBuilder
     {
         public static Envio BuildEnvio(Guid id, string stateKey = null, Guid? servicioId = null,
-            EnvioPersona remitente = null, EnvioPersona destinatario = null, Direccion direccionEntrega = null,
-            Direccion direccionRecogida = null, IEnumerable<Bulto> bultos = null)
+            EnvioPersonaSnapShot remitente = null, EnvioPersonaSnapShot destinatario = null, DireccionSnapShot direccionEntrega = null,
+            DireccionSnapShot direccionRecogida = null, IEnumerable<BultoSnapShot> bultos = null)
         {
-            return new Envio(id, stateKey, servicioId, remitente, destinatario, direccionEntrega, direccionRecogida,
-                bultos);
+            return new Envio(new EnvioSnapShot
+            {
+                EnvioSnapShotId = id,
+                ServicioId = servicioId,
+                Destinatario = destinatario,
+                DestinatarioId = destinatario?.EnvioPersonaSnapShotId,
+                Remitente = remitente,
+                RemitenteId = remitente?.EnvioPersonaSnapShotId,
+                DireccionRecogida = direccionRecogida,
+                DireccionRecogidaId = direccionRecogida?.DireccionSnapShotId,
+                DireccionEntrega = direccionEntrega,
+                DireccionEntregaId = direccionEntrega?.DireccionSnapShotId,
+                Bultos = bultos == null ? new List<BultoSnapShot>() : new List<BultoSnapShot>(bultos)
+            });
         }
 
         public static EnvioPersona GetDefaultRemitente(Guid id, string nombre = "nombreRemitente",

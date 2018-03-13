@@ -68,12 +68,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\EF\BultoSnapShot.cs" />
     <Compile Include="Data\EF\UnitOfWorkBase.cs" />
-    <Compile Include="Data\EF\DireccionSnapShot.cs" />
     <Compile Include="Data\EF\EnvioContext.cs" />
-    <Compile Include="Data\EF\EnvioPersonaSnapShot.cs" />
-    <Compile Include="Data\EF\EnvioSnapShot.cs" />
     <Compile Include="Data\EF\EnvioUnitOfWorkDefault.cs" />
     <Compile Include="Data\DocDb\EnvioDocument.cs" />
     <Compile Include="Data\DocDb\EnvioRepositoryDocDB.cs" />
